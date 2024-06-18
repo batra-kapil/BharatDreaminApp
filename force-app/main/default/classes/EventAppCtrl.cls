@@ -90,7 +90,8 @@ public without sharing class EventAppCtrl {
         String activityType,
         String activitySubType,
         String value,
-        String additionalInfo
+        String additionalInfo,
+        Integer points
     ) {
         try {
             Event_Activity__c ea = new Event_Activity__c();
@@ -100,6 +101,7 @@ public without sharing class EventAppCtrl {
             ea.Sub_Type__c = activitySubType;
             ea.Value__c = value;
             ea.Additional_Info__c = additionalInfo;
+            ea.points__c=points;
             insert ea;
             return true;
         } catch (Exception e) {
@@ -161,6 +163,7 @@ public without sharing class EventAppCtrl {
                 if (allActivities.size() == 0) {
                     // Insert event activity
                     String attendeeType;
+                    Integer points=0;
                     if (attendees[0].Is_Speaker__c == true) {
                         attendeeType = 'Speaker';
                     } else if (attendees[0].Is_Volunteer__c == true) {
@@ -172,7 +175,8 @@ public without sharing class EventAppCtrl {
                         'Interaction',
                         null,
                         secret,
-                        attendeeType
+                        attendeeType,
+                        points
                     );
                     if (saved == true) {
                         cr.isSuccess = true;
@@ -401,34 +405,49 @@ public without sharing class EventAppCtrl {
     public static String saveSessionBoothAttendance(
         String sessionCode,
         String attendeeId,
-        String eventId
+        String eventId,
+        Integer slot
     ) {
         CustomResponse cr = new CustomResponse();
         try {
             List<Session_Booth__c> sessionsAndBooths = [
-                SELECT Id
+                SELECT Id, Type__c
                 FROM Session_Booth__c
-                WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId
+                WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId and slot__c =:slot
                 LIMIT 1
             ];
+            system.debug('##event id '+ eventId);
             if (sessionsAndBooths.size() == 1) {
+                Integer points=0;
+                if(sessionsAndBooths[0].Type__c=='Session')
+                {
+                    points=500;
+                }
+                else {
+                    points=250;
+                }
+                system.debug('##points '+points);
                 List<Session_Booth_Attendance__c> sbaList = [
                     SELECT Id
                     FROM Session_Booth_Attendance__c
                     WHERE
                         Event_Attendee__c = :attendeeId
-                        AND Session_Booth__c = :sessionsAndBooths[0].Id
+                        AND slot__c = :slot
                 ];
                 if (sbaList.size() == 0) {
                     cr.isSuccess = true;
                     Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
                     sba.Event_Attendee__c = attendeeId;
                     sba.Session_Booth__c = sessionsAndBooths[0].Id;
+                    sba.Points__c=points;
+                    sba.slot__c=slot;
                     insert sba;
                     cr.message = sessionsAndBooths[0].Id;
                 } else {
-                    cr.isSuccess = true;
-                    cr.message = sessionsAndBooths[0].Id;
+                    cr.isSuccess = false;
+                cr.message = 'This code is not valid.';
+                    // cr.isSuccess = true;
+                    // cr.message = sessionsAndBooths[0].Id;
                 }
             } else {
                 cr.isSuccess = false;

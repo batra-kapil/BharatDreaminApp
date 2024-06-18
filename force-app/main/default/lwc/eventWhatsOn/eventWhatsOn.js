@@ -5,6 +5,348 @@ import LightningAlert from "lightning/alert";
 import getActiveEvent from "@salesforce/apex/EventAppCtrl.getActiveEvent";
 
 export default class EventWhatsOn extends LightningElement {
+    @api session_slot = "1";
+    slot;
+    //config
+    configs = [
+        {
+            slot: "1",
+            active: false,
+            is_community_session: true,
+            title: "Sessions Going On",
+            time: "12:30PM",
+            items: [
+                {
+                    id: 1,
+                    name: "Rahul Malhotra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1208356452160589824/qLtb5g9P_400x400.jpg\")",
+                    sessionTitle: "Unlocking the Power of GraphQL: Supercharge Your Salesforce APIs",
+                    sessionTime: "12:30 PM",
+                    sessionLocation: "Daring Developers Hall",
+                },
+                {
+                    id: 2,
+                    name: "Monika Ramchandani",
+                    style: "background-image: url(\"https://media.licdn.com/dms/image/D5603AQHMhxtzTQwceQ/profile-displayphoto-shrink_200_200/0/1716618317617?e=2147483647&v=beta&t=sluTOuYBvBaF41JyJscid32hUlN68Y4W7-CJysGkzDI\")",
+                    sessionTitle: "Build Flows Like a Pro!",
+                    sessionTime: "2:30 PM",
+                    sessionLocation: "Awesome Admins Hall"
+                },
+                {
+                    id: 3,
+                    name: "Kapil Batra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1586306161019535360/O4wCLn66_400x400.jpg\")",
+                    sessionTitle: "Building LWCs using Modern JavaScript",
+                    sessionTime: "3:30 PM",
+                    sessionLocation: "Techies Innovation Hall"
+                },
+                {
+                    id: 4,
+                    name: "Jyothsna Bitra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1337719158016905216/Co1DnvWP_400x400.jpg\")",
+                    sessionTitle: "Master Marketing Cloud!",
+                    sessionTime: "3:00 PM",
+                    sessionLocation: "Moment Marketers Hall"
+                }
+            ]
+        },
+        {
+            slot: "2",
+            active: false,
+            is_community_session: true,
+            title: "Sessions Going On",
+            time: "12:30PM",
+            items: [
+                {
+                    id: 1,
+                    name: "Rahul Malhotra Slot 2",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1208356452160589824/qLtb5g9P_400x400.jpg\")",
+                    sessionTitle: "Unlocking the Power of GraphQL: Supercharge Your Salesforce APIs",
+                    sessionTime: "12:30 PM",
+                    sessionLocation: "Daring Developers Hall",
+                },
+                {
+                    id: 2,
+                    name: "Monika Ramchandani Slot 2",
+                    style: "background-image: url(\"https://media.licdn.com/dms/image/D5603AQHMhxtzTQwceQ/profile-displayphoto-shrink_200_200/0/1716618317617?e=2147483647&v=beta&t=sluTOuYBvBaF41JyJscid32hUlN68Y4W7-CJysGkzDI\")",
+                    sessionTitle: "Build Flows Like a Pro!",
+                    sessionTime: "2:30 PM",
+                    sessionLocation: "Awesome Admins Hall"
+                },
+                {
+                    id: 3,
+                    name: "Kapil Batra Slot 2",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1586306161019535360/O4wCLn66_400x400.jpg\")",
+                    sessionTitle: "Building LWCs using Modern JavaScript",
+                    sessionTime: "3:30 PM",
+                    sessionLocation: "Techies Innovation Hall"
+                },
+                {
+                    id: 4,
+                    name: "Jyothsna Bitra Slot 2",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1337719158016905216/Co1DnvWP_400x400.jpg\")",
+                    sessionTitle: "Master Marketing Cloud!",
+                    sessionTime: "3:00 PM",
+                    sessionLocation: "Moment Marketers Hall"
+                }
+            ]
+        },
+        {
+            slot: "3",
+            active: false,
+            is_community_session: true,
+            title: "Sessions Going On",
+            time: "12:30PM",
+            items: [
+                {
+                    id: 1,
+                    name: "Rahul Malhotra slot 3",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1208356452160589824/qLtb5g9P_400x400.jpg\")",
+                    sessionTitle: "Unlocking the Power of GraphQL: Supercharge Your Salesforce APIs",
+                    sessionTime: "12:30 PM",
+                    sessionLocation: "Daring Developers Hall",
+                },
+                {
+                    id: 2,
+                    name: "Monika Ramchandani slot 3",
+                    style: "background-image: url(\"https://media.licdn.com/dms/image/D5603AQHMhxtzTQwceQ/profile-displayphoto-shrink_200_200/0/1716618317617?e=2147483647&v=beta&t=sluTOuYBvBaF41JyJscid32hUlN68Y4W7-CJysGkzDI\")",
+                    sessionTitle: "Build Flows Like a Pro!",
+                    sessionTime: "2:30 PM",
+                    sessionLocation: "Awesome Admins Hall"
+                },
+                {
+                    id: 3,
+                    name: "Kapil Batra slot 3",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1586306161019535360/O4wCLn66_400x400.jpg\")",
+                    sessionTitle: "Building LWCs using Modern JavaScript",
+                    sessionTime: "3:30 PM",
+                    sessionLocation: "Techies Innovation Hall"
+                },
+            ]
+        },
+        {
+            slot: "4",
+            active: false,
+            is_community_session: true,
+            title: "Sessions Going On 4",
+            time: "12:30PM",
+            items: [
+                {
+                    id: 1,
+                    name: "Rahul Malhotra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1208356452160589824/qLtb5g9P_400x400.jpg\")",
+                    sessionTitle: "Unlocking the Power of GraphQL: Supercharge Your Salesforce APIs",
+                    sessionTime: "12:30 PM",
+                    sessionLocation: "Daring Developers Hall",
+                },
+                {
+                    id: 2,
+                    name: "Monika Ramchandani",
+                    style: "background-image: url(\"https://media.licdn.com/dms/image/D5603AQHMhxtzTQwceQ/profile-displayphoto-shrink_200_200/0/1716618317617?e=2147483647&v=beta&t=sluTOuYBvBaF41JyJscid32hUlN68Y4W7-CJysGkzDI\")",
+                    sessionTitle: "Build Flows Like a Pro!",
+                    sessionTime: "2:30 PM",
+                    sessionLocation: "Awesome Admins Hall"
+                },
+                {
+                    id: 3,
+                    name: "Kapil Batra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1586306161019535360/O4wCLn66_400x400.jpg\")",
+                    sessionTitle: "Building LWCs using Modern JavaScript",
+                    sessionTime: "3:30 PM",
+                    sessionLocation: "Techies Innovation Hall"
+                },
+                {
+                    id: 4,
+                    name: "Jyothsna Bitra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1337719158016905216/Co1DnvWP_400x400.jpg\")",
+                    sessionTitle: "Master Marketing Cloud!",
+                    sessionTime: "3:00 PM",
+                    sessionLocation: "Moment Marketers Hall"
+                }
+            ]
+        },
+        {
+            slot: "5",
+            active: false,
+            is_community_session: true,
+            title: "Sessions Going On 5",
+            time: "12:30PM",
+            items: [
+                {
+                    id: 1,
+                    name: "Rahul Malhotra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1208356452160589824/qLtb5g9P_400x400.jpg\")",
+                    sessionTitle: "Unlocking the Power of GraphQL: Supercharge Your Salesforce APIs",
+                    sessionTime: "12:30 PM",
+                    sessionLocation: "Daring Developers Hall",
+                },
+                {
+                    id: 2,
+                    name: "Monika Ramchandani",
+                    style: "background-image: url(\"https://media.licdn.com/dms/image/D5603AQHMhxtzTQwceQ/profile-displayphoto-shrink_200_200/0/1716618317617?e=2147483647&v=beta&t=sluTOuYBvBaF41JyJscid32hUlN68Y4W7-CJysGkzDI\")",
+                    sessionTitle: "Build Flows Like a Pro!",
+                    sessionTime: "2:30 PM",
+                    sessionLocation: "Awesome Admins Hall"
+                },
+                {
+                    id: 3,
+                    name: "Kapil Batra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1586306161019535360/O4wCLn66_400x400.jpg\")",
+                    sessionTitle: "Building LWCs using Modern JavaScript",
+                    sessionTime: "3:30 PM",
+                    sessionLocation: "Techies Innovation Hall"
+                },
+                {
+                    id: 4,
+                    name: "Jyothsna Bitra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1337719158016905216/Co1DnvWP_400x400.jpg\")",
+                    sessionTitle: "Master Marketing Cloud!",
+                    sessionTime: "3:00 PM",
+                    sessionLocation: "Moment Marketers Hall"
+                }
+            ]
+        },
+        {
+            slot: "6",
+            active: false,
+            is_community_session: true,
+            title: "Sessions Going On 6",
+            time: "12:30PM",
+            items: [
+                {
+                    id: 1,
+                    name: "Rahul Malhotra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1208356452160589824/qLtb5g9P_400x400.jpg\")",
+                    sessionTitle: "Unlocking the Power of GraphQL: Supercharge Your Salesforce APIs",
+                    sessionTime: "12:30 PM",
+                    sessionLocation: "Daring Developers Hall",
+                },
+                {
+                    id: 2,
+                    name: "Monika Ramchandani",
+                    style: "background-image: url(\"https://media.licdn.com/dms/image/D5603AQHMhxtzTQwceQ/profile-displayphoto-shrink_200_200/0/1716618317617?e=2147483647&v=beta&t=sluTOuYBvBaF41JyJscid32hUlN68Y4W7-CJysGkzDI\")",
+                    sessionTitle: "Build Flows Like a Pro!",
+                    sessionTime: "2:30 PM",
+                    sessionLocation: "Awesome Admins Hall"
+                },
+                {
+                    id: 3,
+                    name: "Kapil Batra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1586306161019535360/O4wCLn66_400x400.jpg\")",
+                    sessionTitle: "Building LWCs using Modern JavaScript",
+                    sessionTime: "3:30 PM",
+                    sessionLocation: "Techies Innovation Hall"
+                },
+                {
+                    id: 4,
+                    name: "Jyothsna Bitra",
+                    style: "background-image: url(\"https://pbs.twimg.com/profile_images/1337719158016905216/Co1DnvWP_400x400.jpg\")",
+                    sessionTitle: "Master Marketing Cloud!",
+                    sessionTime: "3:00 PM",
+                    sessionLocation: "Moment Marketers Hall"
+                }
+            ]
+        },
+        {
+            slot: "7",
+            active: false,
+            is_community_session: false,
+            items: [
+                {
+                    id: 1,
+                    title: "Demo Jam: Find the best salesforce app",
+                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    time: "1:30PM",
+                    location: "Techies Innovation Hall"
+                }
+            ]
+        },
+        {
+            slot: "8",
+            active: false,
+            is_community_session: false,
+            items: [
+                {
+                    id: 1,
+                    title: "Workshop: Build your first LWC component",
+                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    time: "12:30PM",
+                    location: "Techies Innovation Hall"
+                },
+                {
+                    id: 2,
+                    title: "Workshop: Integrate Salesforce with Vertex AI",
+                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    time: "2:00PM",
+                    location: "Awesome Admins Hall"
+                }
+            ]
+        },
+        {
+            slot: "9",
+            active: false,
+            is_community_session: false,
+            items: [
+                {
+                    id: 1,
+                    title: "Workshop: Build your first LWC component",
+                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    time: "12:30PM",
+                    location: "Techies Innovation Hall"
+                },
+                {
+                    id: 2,
+                    title: "Workshop: Integrate Salesforce with Vertex AI",
+                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    time: "2:00PM",
+                    location: "Awesome Admins Hall"
+                }
+            ]
+        },
+        
+        {
+            slot: "10",
+            active: false,
+            is_community_session: false,
+            items: [
+                {
+                    id: 1,
+                    title: "Opening Ceremony",
+                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    time: "3:30PM",
+                    location: "Main Hall"
+                }
+            ]
+        },
+        {
+            slot: "11",
+            active: false,
+            is_community_session: false,
+            items: [
+                {
+                    id: 1,
+                    title: "Closing Ceremony",
+                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    time: "4:30PM",
+                    location: "Main Hall"
+                }
+            ]
+        },
+        {
+            slot: "12",
+            active: false,
+            is_community_session: false,
+            items: [
+                {
+                    id: 1,
+                    title: "Sponsorship",
+                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    time: "4:30PM",
+                    location: "Sponsorship Hall"
+                }
+            ]
+        }
+    ]
     phase;
     @api attendeeId;
     @api eventId;
@@ -12,6 +354,7 @@ export default class EventWhatsOn extends LightningElement {
     @api preRegistered;
 
     showCheckIn = false;
+    showLunch = false;
     showKeynote = false;
     showGame1 = false;
     showGame2 = false;
@@ -48,7 +391,17 @@ export default class EventWhatsOn extends LightningElement {
             this.showPhaseContent();
         }
         this.showSpinner = false;
+        this.configs.map(config => {
+            config.active = false;
+            if(config.slot === this.session_slot) {
+                config.active = true;
+            }
+        })
     }
+
+
+    
+
 
     showPhaseContent() {
         switch (this.phase) {
@@ -58,9 +411,6 @@ export default class EventWhatsOn extends LightningElement {
             case "Keynote 1":
                 this.showKeynote = true;
                 break;
-            case "Game 1":
-                this.showGame1 = true;
-                break;
             case "Keynote 1 Feedback":
                 this.populateKeynote1Feedback();
                 this.showVote = true;
@@ -68,18 +418,54 @@ export default class EventWhatsOn extends LightningElement {
                 break;
             case "Booths and Sessions":
                 this.showBoothsSessions = true;
+                this.slot=1;
+                this.session_slot="1";
                 break;
-            case "Keynote 2":
-                this.showKeynote = true;
-                break;
-            case "Game 2":
-                this.showGame2 = true;
-                break;
-            case "Keynote 2 Feedback":
-                this.populateKeynote2Feedback();
-                this.showVote = true;
-                this.isFeedback = true;
-                break;
+            case "Booths and Sessions 2":
+                    this.showBoothsSessions = true;
+                    this.slot=2;
+                    this.session_slot="2";
+                    break;
+             case "Booths and Sessions 3":
+                        this.showBoothsSessions = true;
+                        this.slot=3;
+                        this.session_slot="3";
+                        break;
+             case "Lunch":
+                            this.showLunch = true;
+                            break;
+
+                            case "Booths and Sessions 4":
+                                this.showBoothsSessions = true;
+                                this.slot=4;
+                                this.session_slot="4";
+                                break;
+                            case "Booths and Sessions 5":
+                                    this.showBoothsSessions = true;
+                                    this.slot=5;
+                                    this.session_slot="5";
+                                    break;
+                             case "Booths and Sessions 6":
+                                        this.showBoothsSessions = true;
+                                        this.slot=6;
+                                        this.session_slot="6";
+                                        break;
+                                        case "Demo Jam":
+                                        this.showBoothsSessions = true;
+                                        this.slot=7;
+                                        this.session_slot="7";
+                                        break;
+            // case "Keynote 2":
+            //     this.showKeynote = true;
+            //     break;
+            // case "Game 2":
+            //     this.showGame2 = true;
+            //     break;
+            // case "Keynote 2 Feedback":
+            //     this.populateKeynote2Feedback();
+            //     this.showVote = true;
+            //     this.isFeedback = true;
+            //     break;
             case "Survey":
                 this.populateSurvey();
                 this.showSurvey = true;
@@ -226,14 +612,24 @@ export default class EventWhatsOn extends LightningElement {
         }
     }
 
+    points=0;
     handleVote(event) {
         this.showSpinner = true;
+        if(this.phase=='Keynote 1 Feedback')
+            {
+                this.points=2000;
+            }
+            if(this.phase.includes('Session'))
+                {
+                    this.points=500;
+                }
         saveActivity({
             eventId: this.eventId,
             attendeeId: this.attendeeId,
             activityType: "Vote",
             activitySubType: this.voteType,
-            value: JSON.stringify(event.detail.votes)
+            value: JSON.stringify(event.detail.votes),
+            points:this.points
         })
             .then((result) => {
                 if (result) {
@@ -270,11 +666,13 @@ export default class EventWhatsOn extends LightningElement {
     }
 
     showFeedbackForm(sessionCode) {
+        console.log('##event id '+this.eventId);
         this.showSpinner = true;
         saveSessionBoothAttendance({
             eventId: this.eventId,
             attendeeId: this.attendeeId,
-            sessionCode: sessionCode
+            sessionCode: sessionCode,
+            slot:this.slot
         })
             .then((result) => {
                 if (result) {

@@ -1,0 +1,73 @@
+.dashboard-container {
+    padding: 1rem;
+    background: linear-gradient(180deg, rgba(255,225,212,1) 0%, rgba(255,255,255,1) 50%, rgba(208,255,227,1) 100%);
+    min-height: 100vh;
+}
+
+.header {
+    border-bottom: 1px solid #d8dde6;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.app-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.logo-img {
+    width: 50%;
+    height: auto;
+}
+
+.main-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.grid-item {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.card-icon {
+    margin-bottom: 0.5rem;
+}
+
+/* Mobile Friendly Styles */
+@media only screen and (max-width: 600px) {
+    .card {
+        padding: 0.75rem;
+    }
+
+    .card h2 {
+        font-size: 1rem;
+    }
+
+    .logo-img {
+        width: 50%;
+        height: auto;
+    }
+}

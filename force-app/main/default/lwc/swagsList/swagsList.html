@@ -1,0 +1,50 @@
+<template>
+
+    <template lwc:if={showLoading}>
+        <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+    </template>
+    <template lwc:else>
+        <div class="header">
+            <div class="header-content">
+                <span class="user-name">{userName}</span>
+                <span class="user-points">{userPoints} points</span>
+            </div>
+        </div>
+        <template for:each={swagList} for:item="item" for:index="index">
+            <div key={item} class={item.class}>
+                <lightning-layout class="slds-align_absolute-center">
+                    <lightning-layout-item class="slds-m-right_large">
+                        <img class="swag-image" src={item.imageUrl}/>
+                    </lightning-layout-item>
+                    <lightning-layout-item>
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="12">
+                                <div class="swag-name slds-m-bottom_medium">{item.name}</div>
+                                <div class="slds-m-bottom_medium">
+                                    <span>Points Needed : </span>
+                                    <span class="points-needed">{item.pointsNeeded}</span>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                                <template lwc:if={item.isClaimed}>
+                                    <button class="btn slds-button slds-button_brand slds-m-right_x-small" disabled>Redeemed</button>
+                                    <!-- <lightning-helptext content="You've already claimed this swag"></lightning-helptext> -->
+                                </template>
+                                <template lwc:elseif={item.quantityNotAvailable}>
+                                    <button class="btn slds-button slds-button_brand" disabled>Out of Stock</button>
+                                </template>
+                                <template lwc:else>
+                                    <button class="btn redeem-btn slds-button slds-button_brand" disabled={item.showClaimSwagBtn} data-index={index} onclick={handleClaimSwagBtn}>Redeem</button>
+                                    <!-- <template lwc:if={item.showClaimSwagBtn}>
+                                        <lightning-helptext class="slds-m-left_x-small" content="You don't have enough points to claim this swag"></lightning-helptext>
+                                    </template> -->
+                                </template>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </template>
+    </template>
+    
+</template>

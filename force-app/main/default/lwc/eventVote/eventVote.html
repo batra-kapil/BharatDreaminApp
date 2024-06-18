@@ -14,13 +14,13 @@
             <div class="slds-m-top_medium slds-m-bottom_medium">
                 You have successfully submitted your response.
             </div>
-            <template if:true={embedded}>
+            <!-- <template if:true={embedded}>
                 <lightning-button
                     label="Submit for another booth/session"
                     variant="brand"
                     onclick={cancelFeedback}
                 ></lightning-button>
-            </template>
+            </template> -->
         </div>
     </template>
     <template if:false={alreadyVoted}>
@@ -53,7 +53,7 @@
                 variant="brand"
                 onclick={submitVote}
             ></lightning-button>
-            <template if:true={embedded}>
+            <!-- <template if:true={embedded}>
                 <div class="slds-m-top_medium">
                     <lightning-button
                         label="I don't want to give feedback"
@@ -61,7 +61,7 @@
                         onclick={cancelFeedback}
                     ></lightning-button>
                 </div>
-            </template>
+            </template> -->
         </div>
     </template>
 </template>

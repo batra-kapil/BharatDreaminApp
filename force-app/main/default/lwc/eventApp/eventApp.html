@@ -5,7 +5,6 @@
                 <img src={sfLogo} class="slds-m-bottom_xx-small logo" />
             </div>
         </template>
-
         <template if:true={attendeeId}>
             <div class="slds-text-body_regular white">
                 <div class="slds-grid">
@@ -21,14 +20,11 @@
                     <div
                         class="slds-col slds-size_1-of-2 slds-text-align_right"
                     >
-                        <canvas
-                            class="barcode slds-m-top_x-small"
-                            lwc:dom="manual"
-                        ></canvas>
+                    <lightning-button-icon icon-name="standard:home"  size="medium"   alternative-text="View More" class="slds-m-left_xx-small" onclick={handleHome}></lightning-button-icon>
                     </div>
                 </div>
             </div>
-            <div class="slds-text-align_center menu-tabs slds-m-top_medium">
+            <!-- <div class="slds-text-align_center menu-tabs slds-m-top_medium">
                 <lightning-button-group>
                     <lightning-button
                         label="What's On"
@@ -43,10 +39,19 @@
                         onclick={handleShowQuests}
                     ></lightning-button>
                 </lightning-button-group>
-            </div>
+            </div> -->
         </template>
     </div>
-
+    <template if:true={dashboard}>
+        <c-dashboard
+                        event-id={activeEventId}
+                        attendee-id={attendeeId}
+                        team-name={attendeeTeamName}
+                        attendee-reg-id={attendeeRegId}
+                        pre-registered={preRegistered}
+                    ></c-dashboard>
+        </template>
+        
     <div class="slds-p-around_small">
         <template if:false={isLoading}>
             <template if:false={activeEventId}>
@@ -66,6 +71,7 @@
             </template>
             <template if:true={activeEventId}>
                 <template if:true={attendeeId}>
+                    <template if:true={whatsOn}>
                     <!-- MAIN PAGE -->
                     <template if:true={showWhatsOn}>
                         <c-event-whats-on
@@ -82,6 +88,7 @@
                             attendee-id={attendeeId}
                         ></c-event-quest>
                     </template>
+                </template>
                 </template>
                 <template if:false={attendeeId}>
                     <!-- REGISTRATION PAGE -->

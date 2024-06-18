@@ -11,7 +11,7 @@
 }
 
 .attendedSession {
-    background: #6b2f90;
+    background: #248968;
     color: white;
     padding: 5px;
 }
@@ -30,4 +30,42 @@
 
 .img {
     margin: 0 auto;
+}
+.align-center {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+.circle-image-wrapper {
+    position: relative;
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+}
+.card-event {
+    background-color:#ebf5fe;
+}
+.color-title {
+    color: #321977;
+}
+.color-time, .color-location {
+    color: #281d55;
+}
+.layout-item-speaker-card {
+    display: flex;
+}
+.title-speaker {
+    color: #321977;
+    font-size: 1.5rem;
+}
+.title-session {
+    color: #281d55;
+    font-size: 1.15rem;
+}
+.image-banner {
+    height: 30rem;
+    width: -webkit-fill-available;
 }

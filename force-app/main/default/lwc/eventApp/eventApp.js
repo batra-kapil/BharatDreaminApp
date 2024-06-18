@@ -24,9 +24,10 @@ export default class EventApp extends LightningElement {
     attendeeRegId;
     attendeeObj;
     isLoading = true;
-
+    dashboard;
+    whatsOn;
     preRegistered = false;
-
+    redeem;
     async connectedCallback() {
         try {
             const eventResult = await getActiveEvent();
@@ -38,6 +39,7 @@ export default class EventApp extends LightningElement {
                 );
                 if (localStorageAttendeeId) {
                     this.attendeeId = localStorageAttendeeId;
+                    this.dashboard = localStorageAttendeeId;
                     this.getAttendeeInfo();
                 }
             }
@@ -56,6 +58,7 @@ export default class EventApp extends LightningElement {
 
     handleRegComplete(event) {
         this.attendeeId = event.detail.attendeeId;
+        this.dashboard = event.detail.attendeeId;
         localStorage.setItem(ATTENDEEID_LOCALSTORAGE, event.detail.attendeeId);
         this.getAttendeeInfo();
     }
@@ -117,5 +120,10 @@ export default class EventApp extends LightningElement {
 
     handleShowQuests() {
         this.currentTab = QUESTS;
+    }
+    handleHome()
+    {
+        this.dashboard=true;
+        console.log('##dashboard app '+this.dashboard);
     }
 }
