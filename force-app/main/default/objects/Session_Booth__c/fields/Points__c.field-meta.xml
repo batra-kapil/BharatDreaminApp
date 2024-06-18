@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Points__c</fullName>
+    <label>Points</label>
+    <description>Field to calculate points based on Type__c</description>
+    <type>Number</type>
+    <formula>IF(ISPICKVAL(Type__c, 'Session'), 500, 250)</formula>
+    <precision>18</precision>
+    <scale>0</scale>
+    <required>false</required>
+    <externalId>false</externalId>
+    <unique>false</unique>
+</CustomField>
