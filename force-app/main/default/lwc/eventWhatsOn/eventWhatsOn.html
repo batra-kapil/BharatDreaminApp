@@ -3,27 +3,15 @@
         <c-spinner></c-spinner>
     </template>
     <template if:true={showCheckIn}>
-        <div class="slds-text-align_center slds-p-top_x-large">
-            <lightning-icon
-                icon-name="action:approval"
-                alternative-text="Approved"
-                title="Approved"
-            ></lightning-icon>
-            <div class="slds-m-top_medium">Registration and Breakfast</div>
+        <div class="custom-card">
+            <div class="icon-container">
+                <lightning-icon icon-name="utility:food_and_drink" size="large" alternative-text="Kickstart Your Day: Registration & Breakfast Buffet" class="icon"></lightning-icon>
+            </div>
+            <h1 class="title">Kickstart Your Day</h1>
+            <p class="message">Registration and Breakfast Buffet</p>
         </div>
     </template>
     <template if:true={showKeynote}>
-        <!-- <div class="slds-text-align_center slds-p-top_medium">
-            <lightning-icon
-                icon-name="action:announcement"
-                alternative-text="Keynote"
-                title="Keynote"
-            ></lightning-icon>
-            <div class="slds-m-top_medium">
-                Keynote in progress. Make sure you cheer.
-            </div>
-        </div> -->
-
                         <div class="slds-var-p-around_small">
                             <article class="slds-card card-event slds-var-p-bottom_medium">
                                 <div class="slds-card__header slds-grid">
@@ -33,21 +21,13 @@
                                                 alternative-text='Sessions Going On' slot="actions"></lightning-icon>
                                         </div>
                                         <div class="slds-media__body">
-                                            <div class="slds-text-heading_medium color-title">Sessions Going On</div>
-                                        </div>
-                                        <div class="slds-no-flex align-center">
-                                            <lightning-icon size="small" icon-name="standard:today"
-                                                class="slds-var-m-right_xx-small slds-align_absolute-center"></lightning-icon>
-                                            <div
-                                                class="slds-text-heading_small slds-var-m-left_xx-small slds-align_absolute-center color-time">
-                                                12:30PM
-                                            </div>
+                                            <div class="slds-text-heading_medium color-title">Keynote Going On</div>
                                         </div>
                                     </header>
                                 </div>
                                     <lightning-layout multiple-rows horizontal-align="stretch" vertical-align="stretch">
                                         <lightning-layout-item padding="around-small" size="6"
-                                                medium-device-size="6" large-device-size="3" small-device-size="6"
+                                                medium-device-size="6" large-device-size="3" small-device-size="12"
                                                 class="layout-item-speaker-card">
                                                 <article class="slds-card slds-var-p-vertical_medium">
                                                     <lightning-layout multiple-rows horizontal-align="space">
@@ -79,7 +59,7 @@
                                                 </article>
                                             </lightning-layout-item>
                                             <lightning-layout-item padding="around-small" size="6"
-                                                medium-device-size="6" large-device-size="3" small-device-size="6"
+                                                medium-device-size="6" large-device-size="3" small-device-size="12"
                                                 class="layout-item-speaker-card">
                                                 <article class="slds-card slds-var-p-vertical_medium">
                                                     <lightning-layout multiple-rows horizontal-align="space">
@@ -111,7 +91,7 @@
                                                 </article>
                                             </lightning-layout-item>
                                             <lightning-layout-item padding="around-small" size="6"
-                                                medium-device-size="6" large-device-size="3" small-device-size="6"
+                                                medium-device-size="6" large-device-size="3" small-device-size="12"
                                                 class="layout-item-speaker-card">
                                                 <article class="slds-card slds-var-p-vertical_medium">
                                                     <lightning-layout multiple-rows horizontal-align="space">
@@ -143,7 +123,7 @@
                                                 </article>
                                             </lightning-layout-item>
                                             <lightning-layout-item padding="around-small" size="6"
-                                                medium-device-size="6" large-device-size="3" small-device-size="6"
+                                                medium-device-size="6" large-device-size="3" small-device-size="12"
                                                 class="layout-item-speaker-card">
                                                 <article class="slds-card slds-var-p-vertical_medium">
                                                     <lightning-layout multiple-rows horizontal-align="space">
@@ -237,7 +217,7 @@
                                     <lightning-layout multiple-rows horizontal-align="stretch" vertical-align="stretch">
                                         <template for:each={config.items} for:item="speaker">
                                             <lightning-layout-item key={speaker.id} padding="around-small" size="6"
-                                                medium-device-size="6" large-device-size="3" small-device-size="6"
+                                                medium-device-size="6" large-device-size="3" small-device-size="12"
                                                 class="layout-item-speaker-card">
                                                 <article class="slds-card slds-var-p-vertical_medium">
                                                     <lightning-layout multiple-rows horizontal-align="space">
@@ -274,73 +254,233 @@
                             </article>
                         </div>
                     </template>
+                    <template lwc:else>
+                        <lightning-layout horizontal-align="space" multiple-rows>
+                            <template for:each={config.items} for:item="item">
+                                <lightning-layout-item key={item.id}  size="6"
+                                medium-device-size="6" large-device-size="6" small-device-size="12" padding="around-small">
+                                    <article class="slds-card card-event slds-var-p-bottom_medium">
+                                        <div class="slds-card__header slds-grid">
+                                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                <div class="slds-media__figure">
+                                                    <lightning-icon icon-name="standard:announcement"
+                                                        variant="border-filled" alternative-text={item.title}
+                                                        slot="actions"></lightning-icon>
+                                                </div>
+                                                <div class="slds-media__body">
+                                                    <div class="slds-text-heading_medium color-title">{item.title}</div>
+                                                </div>
+                                            </header>
+                                        </div>
+                                        <div class="slds-var-p-horizontal_small">
+                                            <lightning-layout multiple-rows horizontal-align="stretch"
+                                                vertical-align="stretch">
+                                                <lightning-layout-item size="12" padding="around-small">
+                                                    <article class="slds-card slds-var-p-around_medium">
+                                                        <img src={item.image_url} class="image-banner" />
+                                                    </article>
+                                                </lightning-layout-item>
+                                                <lightning-layout-item size="6" padding="around-small">
+                                                    <article class="slds-card align-center">
+                                                        <lightning-icon size="small" icon-name="standard:today"
+                                                            class="slds-var-m-right_xx-small slds-align_absolute-center"></lightning-icon>
+                                                        <div
+                                                            class="slds-text-heading_small slds-var-m-left_xx-small slds-align_absolute-center color-time">
+                                                            {item.time}</div>
+                                                    </article>
+                                                </lightning-layout-item>
+                                                <lightning-layout-item size="6" padding="around-small">
+                                                    <article class="slds-card align-center">
+                                                        <lightning-icon size="small" icon-name="standard:address"
+                                                            class="slds-var-m-right_xx-small slds-align_absolute-center"></lightning-icon>
+                                                        <div
+                                                            class="slds-text-heading_small slds-var-m-left_xx-small slds-align_absolute-center color-location">
+                                                            {item.location}</div>
+                                                    </article>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                        </div>
+                                    </article>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </template>
                 </template>
             </div>
         </template>
-
-        <!-- <div class="slds-m-top_medium">
-            Visit booths or sessions at the event.
-        </div> -->
-        <div class="slds-m-top_large">
-            <div
-                class="slds-text-heading_small slds-text-align_center attendedSession"
-            >
-                Give feedback and earn points
+        <!-- Session Feedback -->
+        <div class="slds-var-p-around_small">
+            <article class="slds-card card-event slds-var-p-bottom_medium">
+                    <lightning-layout multiple-rows horizontal-align="stretch" vertical-align="stretch">
+                            <lightning-layout-item size="6"
+                            medium-device-size="6" large-device-size="3" small-device-size="12" padding="around-small" key={speaker.id}>
+                                <div class="sponsor-card">
+                                    <div class="card-content">
+                                        <div>
+                                            <div
+                                                class="slds-text-heading_small slds-text-align_center attendedSession"
+                                            >
+                                                Give feedback and earn points
+                                            </div>
+                                            <template if:true={showSessionAttendance}>
+                                                <div class="slds-m-top_small">
+                                                    <lightning-input
+                                                        onchange={handleSessionCodeChange}
+                                                        variant="label-hidden"
+                                                        placeholder="Enter session code"
+                                                        class="slds-m-top_small slds-m-bottom_small sessionCode"
+                                                        required="true"
+                                                    ></lightning-input>
+                                                    <lightning-button
+                                                        variant="brand"
+                                                        label="Submit"
+                                                        onclick={saveSessionAttendance}
+                                                    ></lightning-button>
+                                                </div>
+                                            </template>
+                                            <template if:true={showSessionFeedback}>
+                                                <c-event-vote
+                                                    vote-options={voteOptions}
+                                                    vote-type={voteType}
+                                                    vote-title={voteTitle}
+                                                    onvote={handleVote}
+                                                    onclosefeedback={closefeedback}
+                                                    already-voted={alreadyVoted}
+                                                    is-feedback={isFeedback}
+                                                    feedback-text={feedbackText}
+                                                    embedded={embedded}
+                                                ></c-event-vote>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                    </lightning-layout>
+            </article>
+        </div>
+        <template for:each={workshops} for:item="workshop">
+            <div key={workshop.slot}>
+                <template lwc:if={workshop.active}>
+                    <lightning-layout horizontal-align="space" multiple-rows>
+                        <template for:each={workshop.items} for:item="witem">
+                            <lightning-layout-item key={witem.id}   size="6"
+                                medium-device-size="6" large-device-size="6" small-device-size="12" padding="around-small">
+                                <article class="slds-card card-event slds-var-p-bottom_medium">
+                                    <div class="slds-card__header slds-grid">
+                                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                            <div class="slds-media__figure">
+                                                <lightning-icon icon-name="standard:announcement"
+                                                    variant="border-filled" alternative-text={witem.title}
+                                                    slot="actions"></lightning-icon>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <div class="slds-text-heading_medium color-title">{witem.title}</div>
+                                            </div>
+                                        </header>
+                                    </div>
+                                    <div class="slds-var-p-horizontal_small">
+                                        <lightning-layout multiple-rows horizontal-align="stretch"
+                                            vertical-align="stretch">
+                                            <lightning-layout-item size="12" padding="around-small">
+                                                <article class="slds-card slds-var-p-around_medium">
+                                                    <img src={witem.image_url} class="image-banner" />
+                                                </article>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="6" padding="around-small">
+                                                <article class="slds-card align-center">
+                                                    <lightning-icon size="small" icon-name="standard:today"
+                                                        class="slds-var-m-right_xx-small slds-align_absolute-center"></lightning-icon>
+                                                    <div
+                                                        class="slds-text-heading_small slds-var-m-left_xx-small slds-align_absolute-center color-time">
+                                                        {witem.time}</div>
+                                                </article>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="6" padding="around-small">
+                                                <article class="slds-card align-center">
+                                                    <lightning-icon size="small" icon-name="standard:address"
+                                                        class="slds-var-m-right_xx-small slds-align_absolute-center"></lightning-icon>
+                                                    <div
+                                                        class="slds-text-heading_small slds-var-m-left_xx-small slds-align_absolute-center color-location">
+                                                        {witem.location}</div>
+                                                </article>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                </article>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </template>
             </div>
-            <template if:true={showSessionAttendance}>
-                <div class="slds-m-top_small">
-                    <!-- Enter the code or scan the QR code shared during the session
-                    or at the booth to mark your attendance and optionally give
-                    feedback
-                    <div class="slds-m-top_medium">
-                        <lightning-button
-                            label="Scan QR code"
-                            variant="neutral"
-                            onclick={scanQRCode}
-                        ></lightning-button>
-                    </div>
-                    <div class="slds-m-top_medium slds-m-bottom_medium">
-                        <b>OR</b>
-                    </div> -->
-                    <lightning-input
-                        onchange={handleSessionCodeChange}
-                        variant="label-hidden"
-                        placeholder="Enter session or booth code"
-                        class="slds-m-top_small slds-m-bottom_small sessionCode"
-                        required="true"
-                    ></lightning-input>
-                    <lightning-button
-                        variant="brand"
-                        label="Submit"
-                        onclick={saveSessionAttendance}
-                    ></lightning-button>
-                </div>
-            </template>
-            <template if:true={showSessionFeedback}>
-                <c-event-vote
-                    vote-options={voteOptions}
-                    vote-type={voteType}
-                    vote-title={voteTitle}
-                    onvote={handleVote}
-                    onclosefeedback={closefeedback}
-                    already-voted={alreadyVoted}
-                    is-feedback={isFeedback}
-                    feedback-text={feedbackText}
-                    embedded={embedded}
-                ></c-event-vote>
-            </template>
-        </div>
+        </template>
+        <!-- Workshop Feedback -->
+         <template if:true={showWorkshop}>
+            <div class="slds-var-p-around_small">
+                <article class="slds-card card-event slds-var-p-bottom_medium">
+                        <lightning-layout multiple-rows horizontal-align="stretch" vertical-align="stretch">
+                                <lightning-layout-item size="6"
+                                medium-device-size="6" large-device-size="3" small-device-size="12" padding="around-small" key={speaker.id}>
+                                    <div class="sponsor-card">
+                                        <div class="card-content">
+                                            <div>
+                                                <div
+                                                    class="slds-text-heading_small slds-text-align_center attendedSession"
+                                                >
+                                                    Give feedback and earn points
+                                                </div>
+                                                <template if:true={showWorkshopAttendance}>
+                                                    <div class="slds-m-top_small">
+                                                        <lightning-input
+                                                            onchange={handleSessionCodeChange}
+                                                            variant="label-hidden"
+                                                            placeholder="Enter workshop code"
+                                                            class="slds-m-top_small slds-m-bottom_small sessionCode"
+                                                            required="true"
+                                                        ></lightning-input>
+                                                        <lightning-button
+                                                            variant="brand"
+                                                            label="Submit"
+                                                            onclick={saveWorkshopAttendance}
+                                                        ></lightning-button>
+                                                    </div>
+                                                </template>
+                                                <template if:true={showWorkshopFeedback}>
+                                                    <c-event-vote
+                                                        vote-options={voteOptions}
+                                                        vote-type={voteType}
+                                                        vote-title={voteTitle}
+                                                        onvote={handleVote}
+                                                        onclosefeedback={closeWorkshopfeedback}
+                                                        already-voted={alreadyVoted}
+                                                        is-feedback={isFeedback}
+                                                        feedback-text={feedbackText}
+                                                        embedded={embedded}
+                                                    ></c-event-vote>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                        </lightning-layout>
+                </article>
+            </div>
+         </template>
+       
     </template>
+
     <template if:true={showLunch}>
-        <div class="slds-text-align_center slds-p-top_x-large">
-            <lightning-icon
-                icon-name="action:approval"
-                alternative-text="Approved"
-                title="Approved"
-            ></lightning-icon>
-            <div class="slds-m-top_medium">Grab a bite, recharge, and get ready for an afternoon of fun and learning!</div>
+        <div class="custom-card">
+            <div class="icon-container">
+                <lightning-icon icon-name="utility:food_and_drink" size="large" alternative-text="Lunch Break" class="icon"></lightning-icon>
+            </div>
+            <h1 class="title">Lunch Break</h1>
+            <p class="message">Grab a bite, recharge, and get ready for an afternoon of fun and learning!</p>
         </div>
     </template>
+
+
+
+    
     <template if:true={showScanner}>
         <div class="fixed">
             <div class="slds-text-align_right slds-p-around_x-small">

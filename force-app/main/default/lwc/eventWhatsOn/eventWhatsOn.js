@@ -1,12 +1,17 @@
 import { LightningElement, api } from "lwc";
 import saveActivity from "@salesforce/apex/EventAppCtrl.saveActivity";
 import saveSessionBoothAttendance from "@salesforce/apex/EventAppCtrl.saveSessionBoothAttendance";
+import saveWorkshopAttendance from "@salesforce/apex/EventAppCtrl.saveWorkshopAttendance";
 import LightningAlert from "lightning/alert";
 import getActiveEvent from "@salesforce/apex/EventAppCtrl.getActiveEvent";
 
 export default class EventWhatsOn extends LightningElement {
     @api session_slot = "1";
+    @api workshop_slot = "0";
     slot;
+    workshopSlot=0;
+    slotToSend;
+    showWorkshop=false;
     //config
     configs = [
         {
@@ -268,58 +273,15 @@ export default class EventWhatsOn extends LightningElement {
             items: [
                 {
                     id: 1,
-                    title: "Workshop: Build your first LWC component",
+                    title: "Sponsorship",
                     image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
-                    time: "12:30PM",
-                    location: "Techies Innovation Hall"
-                },
-                {
-                    id: 2,
-                    title: "Workshop: Integrate Salesforce with Vertex AI",
-                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
-                    time: "2:00PM",
-                    location: "Awesome Admins Hall"
+                    time: "4:30PM",
+                    location: "Sponsorship Hall"
                 }
             ]
         },
         {
             slot: "9",
-            active: false,
-            is_community_session: false,
-            items: [
-                {
-                    id: 1,
-                    title: "Workshop: Build your first LWC component",
-                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
-                    time: "12:30PM",
-                    location: "Techies Innovation Hall"
-                },
-                {
-                    id: 2,
-                    title: "Workshop: Integrate Salesforce with Vertex AI",
-                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
-                    time: "2:00PM",
-                    location: "Awesome Admins Hall"
-                }
-            ]
-        },
-        
-        {
-            slot: "10",
-            active: false,
-            is_community_session: false,
-            items: [
-                {
-                    id: 1,
-                    title: "Opening Ceremony",
-                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
-                    time: "3:30PM",
-                    location: "Main Hall"
-                }
-            ]
-        },
-        {
-            slot: "11",
             active: false,
             is_community_session: false,
             items: [
@@ -331,18 +293,52 @@ export default class EventWhatsOn extends LightningElement {
                     location: "Main Hall"
                 }
             ]
-        },
+        }
+    ]
+    workshops = [
         {
-            slot: "12",
+            slot: "1",
             active: false,
-            is_community_session: false,
+            is_community_session: true,
+            title: "Sessions Going On",
+            time: "12:30PM",
             items: [
                 {
                     id: 1,
-                    title: "Sponsorship",
+                    title: "Workshop: Build your first LWC component",
                     image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
-                    time: "4:30PM",
-                    location: "Sponsorship Hall"
+                    time: "12:30PM",
+                    location: "Techies Innovation Hall"
+                },
+                {
+                    id: 2,
+                    title: "Workshop: Integrate Salesforce with Vertex AI",
+                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    time: "2:00PM",
+                    location: "Awesome Admins Hall"
+                }
+            ]
+        },
+        {
+            slot: "2",
+            active: false,
+            is_community_session: true,
+            title: "Sessions Going On",
+            time: "12:30PM",
+            items: [
+                {
+                    id: 1,
+                    title: "Workshop: Build your first LWC component",
+                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    time: "12:30PM",
+                    location: "Techies Innovation Hall"
+                },
+                {
+                    id: 2,
+                    title: "Workshop: Integrate Salesforce with Vertex AI",
+                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    time: "2:00PM",
+                    location: "Awesome Admins Hall"
                 }
             ]
         }
@@ -393,10 +389,21 @@ export default class EventWhatsOn extends LightningElement {
         this.showSpinner = false;
         this.configs.map(config => {
             config.active = false;
+            console.log('##config log '+config.slot+" "+this.session_slot);
             if(config.slot === this.session_slot) {
                 config.active = true;
             }
-        })
+        });
+        this.workshops.map(workshop => {
+            workshop.active = false;
+            console.log('##workshop log '+workshop.slot+" "+this.workshop_slot);
+            if(workshop.slot === this.workshop_slot) {
+                console.log('##if');
+                workshop.active = true;
+                console.log('##status '+workshop.active);
+                this.showWorkshop=true;
+            }
+        });
     }
 
 
@@ -454,6 +461,19 @@ export default class EventWhatsOn extends LightningElement {
                                         this.showBoothsSessions = true;
                                         this.slot=7;
                                         this.session_slot="7";
+                                        this.workshopSlot=0;
+                                        break;
+                                        case "Sponsor Hour":
+                                        this.showBoothsSessions = true;
+                                        this.slot=8;
+                                        this.session_slot="8";
+                                        this.workshopSlot=0;
+                                        break;
+                                        case "Closing Ceremony":
+                                        this.showBoothsSessions = true;
+                                        this.slot=9;
+                                        this.session_slot="9";
+                                        this.workshopSlot=0;
                                         break;
             // case "Keynote 2":
             //     this.showKeynote = true;
@@ -478,6 +498,16 @@ export default class EventWhatsOn extends LightningElement {
                 break;
             default:
                 break;
+        }
+        if(this.slot==1 || this.slot==2 || this.slot==3)
+            {
+                this.workshopSlot=1;
+                this.workshop_slot='1';
+            }
+        else if(this.slot==4 || this.slot==5 || this.slot==6)
+        {
+            this.workshopSlot=2;
+            this.workshop_slot='2';
         }
     }
 
@@ -613,23 +643,59 @@ export default class EventWhatsOn extends LightningElement {
     }
 
     points=0;
+    activityDescription;
     handleVote(event) {
         this.showSpinner = true;
+        console.log('##phase'+this.phase);
         if(this.phase=='Keynote 1 Feedback')
             {
                 this.points=2000;
+                this.activityDescription='You gave feedback for keynote speakers';
             }
-            if(this.phase.includes('Session'))
+            if(this.phase.includes('Booths and Sessions'))
                 {
                     this.points=500;
+                    this.activityDescription='You gave feedback for session speaker with session code '+this.sessionCode;
                 }
+                if(this.phase.includes('Demo Jam'))
+                    {
+                        this.points=1000;
+                        this.activityDescription='You gave feedback for demo jam with demo jam code '+this.sessionCode;
+                    }
+                    // if(this.phase.includes('Booth'))
+                    //     {
+                    //         this.points=250;
+                    //         this.activityDescription='You gave feedback for booth with booth code '+this.sessionCode;
+                    //     }
+                        if(this.phase.includes('Sponsor'))
+                            {
+                                this.points=1000;
+                                this.activityDescription='You gave feedback for sponsor hour session with session code '+this.sessionCode;
+                            }
+                            if(this.phase.includes('Closing'))
+                                {
+                                    this.points=2000;
+                                    this.activityDescription='You gave feedback for closing ceremony with code '+this.sessionCode;
+                                }
+                                if(this.phase.includes('Event Feedback'))
+                                    {
+                                        this.points=500;
+                                        this.activityDescription='You gave feedback for overall event';
+                                    }
+                                    if(this.workshopSlot!=0)
+                                        {
+                                            this.points=500;
+                                            this.activityDescription='You gave feedback for workshop with workshop code '+this.sessionCode;
+                                        }
+                console.log('##points'+this.points);
         saveActivity({
             eventId: this.eventId,
             attendeeId: this.attendeeId,
             activityType: "Vote",
             activitySubType: this.voteType,
             value: JSON.stringify(event.detail.votes),
-            points:this.points
+            points:this.points,
+            activityDescription : this.activityDescription
         })
             .then((result) => {
                 if (result) {
@@ -661,18 +727,24 @@ export default class EventWhatsOn extends LightningElement {
     showSessionAttendance = true;
     showSessionFeedback = false;
 
+    showWorkshopAttendance = true;
+    showWorkshopFeedback = false;
+
     handleSessionCodeChange(event) {
         this.sessionCode = event.detail.value;
     }
-
+    type;
     showFeedbackForm(sessionCode) {
+        this.slotToSend=this.slot;
+                this.type='Session';
         console.log('##event id '+this.eventId);
         this.showSpinner = true;
         saveSessionBoothAttendance({
             eventId: this.eventId,
             attendeeId: this.attendeeId,
             sessionCode: sessionCode,
-            slot:this.slot
+            slot:this.slot,
+            type:this.type
         })
             .then((result) => {
                 if (result) {
@@ -684,8 +756,79 @@ export default class EventWhatsOn extends LightningElement {
                         // Populate Vote Options
                         this.voteType =
                             "session_feedback" + parsedResult.message;
-                        this.voteTitle =
-                            "Attendance marked. Share your feedback";
+                        // this.voteTitle =
+                        //     "Please sharing ";
+                        this.voteOptions = [
+                            {
+                                title: "How did you like the content shared?",
+                                name: "session_feedback" + parsedResult.message,
+                                options: this.feedbackOptions
+                            }
+                        ];
+                        this.embedded = true;
+                        this.isFeedback = true;
+                        this.feedbackText = "Any additional thoughts?";
+                        if (
+                            localStorage.getItem("vote_" + this.voteType) ===
+                            "done"
+                        ) {
+                            this.alreadyVoted = true;
+                        } else {
+                            this.alreadyVoted = false;
+                        }
+                    } else {
+                        LightningAlert.open({
+                            message: parsedResult.message,
+                            theme: "error",
+                            label: "Oops!"
+                        });
+                    }
+                } else {
+                    LightningAlert.open({
+                        message:
+                            "An error occurred when saving your data. Please reach out to the event staff.",
+                        theme: "error",
+                        label: "An error occurred"
+                    });
+                }
+            })
+            .catch(() => {
+                LightningAlert.open({
+                    message:
+                        "An error occurred when saving your data. Please reach out to the event staff.",
+                    theme: "error",
+                    label: "An error occurred"
+                });
+            })
+            .finally(() => {
+                this.showSpinner = false;
+            });
+    }
+
+    showWorkshopFeedbackForm(sessionCode) {
+        this.slotToSend=this.workshopSlot;
+        this.type='Workshop';
+        console.log('##event id '+this.eventId);
+        this.showSpinner = true;
+        saveWorkshopAttendance({
+            eventId: this.eventId,
+            attendeeId: this.attendeeId,
+            sessionCode: sessionCode,
+            slot:this.workshopSlot,
+            type:this.type
+        })
+            .then((result) => {
+                if (result) {
+                    const parsedResult = JSON.parse(result);
+                    if (parsedResult.isSuccess) {
+                        this.showWorkshopAttendance = false;
+                        this.showWorkshopFeedback = true;
+
+                        // Populate Vote Options
+                        this.voteType =
+                            "session_feedback" + parsedResult.message;
+                        // this.voteTitle =
+                        //     "Please sharing ";
                         this.voteOptions = [
                             {
                                 title: "How did you like the content shared?",
@@ -744,10 +887,26 @@ export default class EventWhatsOn extends LightningElement {
             sessionCodeEle.reportValidity();
         }
     }
+    saveWorkshopAttendance() {
+        const sessionCodeEle = this.template.querySelector(".sessionCode");
+        if (this.sessionCode) {
+            sessionCodeEle.setCustomValidity("");
+            sessionCodeEle.reportValidity();
+            this.showWorkshopFeedbackForm(this.sessionCode);
+        } else {
+            sessionCodeEle.setCustomValidity("Session Code is required");
+            sessionCodeEle.reportValidity();
+        }
+    }
 
     closefeedback() {
         this.showSessionAttendance = true;
         this.showSessionFeedback = false;
+        this.sessionCode = undefined;
+    }
+    closeWorkshopfeedback() {
+        this.showWorkshopAttendance = true;
+        this.showWorkshopFeedback = false;
         this.sessionCode = undefined;
     }
 

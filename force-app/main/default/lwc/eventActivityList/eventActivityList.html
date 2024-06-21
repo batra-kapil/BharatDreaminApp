@@ -1,0 +1,17 @@
+<template>
+    <div class="custom-card">
+    <lightning-card title="Event Activities">
+        <template if:true={eventActivities.data}>
+            <lightning-datatable
+                key-field="Id"
+                data={eventActivities.data}
+                columns={columns}
+                hide-checkbox-column
+            ></lightning-datatable>
+        </template>
+        <template if:true={eventActivities.error}>
+            <p>{eventActivities.error}</p>
+        </template>
+    </lightning-card>
+</div>
+</template>

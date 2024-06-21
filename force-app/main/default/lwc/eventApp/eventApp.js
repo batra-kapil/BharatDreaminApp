@@ -29,9 +29,11 @@ export default class EventApp extends LightningElement {
     preRegistered = false;
     redeem;
     async connectedCallback() {
+        console.log('##try 1');
         try {
             const eventResult = await getActiveEvent();
             if (eventResult) {
+                console.log('##event result'+eventResult.Id);
                 this.activeEventId = eventResult.Id;
                 this.phase = eventResult.Event_Phase__c;
                 const localStorageAttendeeId = localStorage.getItem(
@@ -45,6 +47,7 @@ export default class EventApp extends LightningElement {
             }
             this.isLoading = false;
         } catch (e) {
+            console.log('##catch ');
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: "An error occurred",
@@ -121,9 +124,7 @@ export default class EventApp extends LightningElement {
     handleShowQuests() {
         this.currentTab = QUESTS;
     }
-    handleHome()
-    {
-        this.dashboard=true;
-        console.log('##dashboard app '+this.dashboard);
+    refreshPage() {
+        window.location.reload();
     }
 }

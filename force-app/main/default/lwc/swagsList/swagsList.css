@@ -61,3 +61,11 @@
     --slds-c-button-color-border: #E9733C;
     --slds-c-button-sizing-border: 0px;
 }
+.custom-card {
+    background: linear-gradient(135deg, #e8e8e8 0%, #ffffff 50%, #e9ecffde 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

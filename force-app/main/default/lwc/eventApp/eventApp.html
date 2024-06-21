@@ -1,5 +1,5 @@
 <template>
-    <div class="header slds-p-around_medium">
+    <div class="custom-card">
         <template if:false={attendeeId}>
             <div class="slds-text-align_center">
                 <img src={sfLogo} class="slds-m-bottom_xx-small logo" />
@@ -13,33 +13,22 @@
                             src={sfLogo}
                             class="slds-m-bottom_xx-small logo-small"
                         />
-                        <div class="slds-p-left_xx-small slds-m-top_x-small">
+                        <div class="slds-p-left_xx-small slds-m-top_x-small" style="color:black">
                             Hi {attendeeName}
                         </div>
                     </div>
                     <div
                         class="slds-col slds-size_1-of-2 slds-text-align_right"
                     >
-                    <lightning-button-icon icon-name="standard:home"  size="medium"   alternative-text="View More" class="slds-m-left_xx-small" onclick={handleHome}></lightning-button-icon>
+                    <lightning-button-icon
+        icon-name="standard:home"
+        alternative-text="Refresh"
+        onclick={refreshPage}
+        size="large">
+    </lightning-button-icon>
                     </div>
                 </div>
             </div>
-            <!-- <div class="slds-text-align_center menu-tabs slds-m-top_medium">
-                <lightning-button-group>
-                    <lightning-button
-                        label="What's On"
-                        class="eqw"
-                        variant={b1Variant}
-                        onclick={handleShowWhatsOn}
-                    ></lightning-button>
-                    <lightning-button
-                        label="Quest"
-                        class="eqw"
-                        variant={b2Variant}
-                        onclick={handleShowQuests}
-                    ></lightning-button>
-                </lightning-button-group>
-            </div> -->
         </template>
     </div>
     <template if:true={dashboard}>

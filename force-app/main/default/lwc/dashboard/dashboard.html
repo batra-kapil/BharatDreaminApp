@@ -1,12 +1,12 @@
 <template>
     
         <template if:true={dashboard}>
-            <div class="slds-p-around_medium dashboard-container">
+            <div class="custom-card">
             <lightning-layout>
                 <!-- Main Section -->
                 <lightning-layout-item size="12" class="main-section">
                     <lightning-layout multiple-rows class="slds-wrap">
-                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="12">
+                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="6">
                             <div class="card">
                                 <lightning-icon icon-name="standard:data_cloud" size="large" alternative-text="What's on" class="card-icon"></lightning-icon>
                                 <br/>
@@ -14,7 +14,15 @@
                                 </lightning-button>
                             </div>
                         </lightning-layout-item>
-                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="12">
+                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="6">
+                            <div class="card">
+                                <lightning-icon icon-name="standard:webcart" size="large" alternative-text="Visit Booth" class="card-icon"></lightning-icon>
+                                <br/>
+                                <lightning-button variant="base" label="Visit Booth" title="Visit Booth" onclick={handleBooth} class="slds-m-left_x-small" style="font-size: 20px; color:black !important">
+                                </lightning-button>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="6">
                             <div class="card">
                                 <lightning-icon icon-name="standard:webcart" size="large" alternative-text="Redeem" class="card-icon"></lightning-icon>
                                 <br/>
@@ -22,28 +30,24 @@
                                 </lightning-button>
                             </div>
                         </lightning-layout-item>
-                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="12">
+                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="6">
                             <div class="card">
-                                <lightning-icon icon-name="standard:visit_templates" size="large" alternative-text="Points Board" class="card-icon"></lightning-icon>
-                                <h2>Points Board</h2>
+                            <lightning-icon icon-name="standard:visit_templates" size="large" alternative-text="Points Board" class="card-icon"></lightning-icon>
+                                <br/>
+                                <lightning-button variant="base" label="Points Board" title="Points Board" onclick={handlepointsBoard} class="slds-m-left_x-small" style="font-size: 20px; color:black !important">
+                                </lightning-button>
                             </div>
                         </lightning-layout-item>
-                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="12">
+                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="6">
                             <div class="card">
                                 <lightning-icon icon-name="standard:user" size="large" alternative-text="Speakers" class="card-icon"></lightning-icon>
                                 <h2>Speakers</h2>
                             </div>
                         </lightning-layout-item>
-                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="12">
+                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="6">
                             <div class="card">
                                 <lightning-icon icon-name="custom:custom11" size="large" alternative-text="Sponsors" class="card-icon"></lightning-icon>
                                 <h2>Sponsors</h2>
-                            </div>
-                        </lightning-layout-item>
-                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="12">
-                            <div class="card">
-                                <lightning-icon icon-name="standard:party_profile" size="large" alternative-text="Your Profile" class="card-icon"></lightning-icon>
-                                <h2>Your Profile</h2>
                             </div>
                         </lightning-layout-item>
                     </lightning-layout>
@@ -64,5 +68,23 @@
                 attendee-reg-id={attendeeRegId}
                 pre-registered={preRegistered}
             ></c-event-whats-on>
+        </template>
+        <template if:true={pointsBoard}>
+            <c-event-activity-list
+                event-id={eventId}
+                attendee-id={attendeeId}
+                team-name={teamName}
+                attendee-reg-id={attendeeRegId}
+                pre-registered={preRegistered}
+            ></c-event-activity-list>
+        </template>
+        <template if:true={showBooth}>
+            <c-event-booth
+            event-id={eventId}
+                attendee-id={attendeeId}
+                team-name={teamName}
+                attendee-reg-id={attendeeRegId}
+                pre-registered={preRegistered}
+            ></c-event-booth>
         </template>
 </template>
