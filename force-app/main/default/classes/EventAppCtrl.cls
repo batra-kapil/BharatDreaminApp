@@ -41,6 +41,10 @@ public without sharing class EventAppCtrl {
             WHERE Event_Attendee__c = :attendeeId
         ];
     }
+    @AuraEnabled(cacheable=true)
+    public static List<Event_Activity__c> getEventLeaderBoard() {
+        return [SELECT Id, Event_Attendee__r.Name, Points__c FROM Event_Activity__c ORDER BY Points__c DESC LIMIT 10];
+    }
     @AuraEnabled
     public static Event_Attendees__c getAttendeeById(String attendeeId) {
         Trailblazer_Event__c de = getActiveEvent();

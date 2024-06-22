@@ -8,9 +8,9 @@
                     <lightning-layout multiple-rows class="slds-wrap">
                         <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="6">
                             <div class="card">
-                                <lightning-icon icon-name="standard:data_cloud" size="large" alternative-text="What's on" class="card-icon"></lightning-icon>
+                                <lightning-icon icon-name="standard:data_cloud" size="large" alternative-text="What's Buzzing" class="card-icon"></lightning-icon>
                                 <br/>
-                                <lightning-button variant="base" label="What's on" title="What's on" onclick={handleshowWhatsOn} class="slds-m-left_x-small" style="font-size: 20px; color:black !important">
+                                <lightning-button variant="base" label="What's Buzzing" title="What's Buzzing" onclick={handleshowWhatsOn} class="slds-m-left_x-small" style="font-size: 20px; color:black !important">
                                 </lightning-button>
                             </div>
                         </lightning-layout-item>
@@ -40,14 +40,26 @@
                         </lightning-layout-item>
                         <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="6">
                             <div class="card">
-                                <lightning-icon icon-name="standard:user" size="large" alternative-text="Speakers" class="card-icon"></lightning-icon>
-                                <h2>Speakers</h2>
+                            <lightning-icon icon-name="standard:visit_templates" size="large" alternative-text="Leader Board" class="card-icon"></lightning-icon>
+                                <br/>
+                                <lightning-button variant="base" label="Leader Board" title="Leader Board" onclick={handleLeaderBoard} class="slds-m-left_x-small" style="font-size: 20px; color:black !important">
+                                </lightning-button>
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="6">
                             <div class="card">
-                                <lightning-icon icon-name="custom:custom11" size="large" alternative-text="Sponsors" class="card-icon"></lightning-icon>
-                                <h2>Sponsors</h2>
+                            <lightning-icon icon-name="standard:user" size="large" alternative-text="Speakers" class="card-icon"></lightning-icon>
+                                <br/>
+                                <lightning-button variant="base" label="Speakers" title="Speakers" onclick={handleSpeakers} class="slds-m-left_x-small" style="font-size: 20px; color:black !important">
+                                </lightning-button>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="grid-item" size="4" medium-device-size="6" small-device-size="6">
+                            <div class="card">
+                            <lightning-icon icon-name="custom:custom11" size="large" alternative-text="Sponsors" class="card-icon"></lightning-icon>
+                                <br/>
+                                <lightning-button variant="base" label="Sponsors" title="Sponsors" onclick={handleSponsors} class="slds-m-left_x-small" style="font-size: 20px; color:black !important">
+                                </lightning-button>
                             </div>
                         </lightning-layout-item>
                     </lightning-layout>
@@ -77,6 +89,33 @@
                 attendee-reg-id={attendeeRegId}
                 pre-registered={preRegistered}
             ></c-event-activity-list>
+        </template>
+        <template if:true={leaderBoard}>
+            <c-event-leader-board
+                event-id={eventId}
+                attendee-id={attendeeId}
+                team-name={teamName}
+                attendee-reg-id={attendeeRegId}
+                pre-registered={preRegistered}
+            ></c-event-leader-board>
+        </template>
+        <template if:true={showSpeakers}>
+            <c-event-speakers
+                event-id={eventId}
+                attendee-id={attendeeId}
+                team-name={teamName}
+                attendee-reg-id={attendeeRegId}
+                pre-registered={preRegistered}
+            ></c-event-speakers>
+        </template>
+        <template if:true={showSponsors}>
+            <c-event-sponsors
+                event-id={eventId}
+                attendee-id={attendeeId}
+                team-name={teamName}
+                attendee-reg-id={attendeeRegId}
+                pre-registered={preRegistered}
+            ></c-event-sponsors>
         </template>
         <template if:true={showBooth}>
             <c-event-booth
