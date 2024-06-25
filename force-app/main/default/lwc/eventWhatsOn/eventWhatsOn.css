@@ -37,16 +37,37 @@
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
 }
+.align-left {
+    display: flex;
+    justify-content: left;
+    padding-left:0.5rem;
+    padding-top:0.2rem;
+    padding-bottom:0.2rem;
+}
+.slds-icon
+{
+    height: 1rem !important;
+    width: 1rem !important;
+}
+.slds-icon_small
+{
+    height: 1rem !important;
+    width: 1rem !important;
+}
 .circle-image-wrapper {
     position: relative;
-    width: 7.5rem;
-    height: 7.5rem;
+    width: 5.5rem;
+    height: 5.5rem;
     border-radius: 50%;
     background-size: cover;
     background-position: center;
 }
 .card-event {
     background-color:#ebf5fe;
+}
+.slds-p-left_large
+{
+
 }
 .color-title {
     color: #321977;
@@ -59,11 +80,12 @@
 }
 .title-speaker {
     color: #321977;
-    font-size: 1.5rem;
+    font-size: .8rem;
+    font-weight: bold;
 }
 .title-session {
     color: #281d55;
-    font-size: 1.15rem;
+    font-size: .6rem;
 }
 .image-banner {
     height: 30rem;
