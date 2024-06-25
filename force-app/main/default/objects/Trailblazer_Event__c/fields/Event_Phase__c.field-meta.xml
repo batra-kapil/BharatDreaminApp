@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Event_Phase__c</fullName>
     <externalId>false</externalId>
@@ -20,11 +20,6 @@
                 <label>Keynote 1</label>
             </value>
             <value>
-                <fullName>Game 1</fullName>
-                <default>false</default>
-                <label>Game 1</label>
-            </value>
-            <value>
                 <fullName>Keynote 1 Feedback</fullName>
                 <default>false</default>
                 <label>Keynote 1 Feedback</label>
@@ -35,24 +30,49 @@
                 <label>Booths and Sessions</label>
             </value>
             <value>
-                <fullName>Survey</fullName>
+                <fullName>Booths and Sessions 2</fullName>
                 <default>false</default>
-                <label>Survey</label>
+                <label>Booths and Sessions 2</label>
             </value>
             <value>
-                <fullName>Game 2</fullName>
+                <fullName>Booths and Sessions 3</fullName>
                 <default>false</default>
-                <label>Game 2</label>
+                <label>Booths and Sessions 3</label>
             </value>
             <value>
-                <fullName>Keynote 2</fullName>
+                <fullName>Lunch</fullName>
                 <default>false</default>
-                <label>Keynote 2</label>
+                <label>Lunch</label>
             </value>
             <value>
-                <fullName>Keynote 2 Feedback</fullName>
+                <fullName>Booths and Sessions 4</fullName>
                 <default>false</default>
-                <label>Keynote 2 Feedback</label>
+                <label>Booths and Sessions 4</label>
+            </value>
+            <value>
+                <fullName>Booths and Sessions 5</fullName>
+                <default>false</default>
+                <label>Booths and Sessions 5</label>
+            </value>
+            <value>
+                <fullName>Booths and Sessions 6</fullName>
+                <default>false</default>
+                <label>Booths and Sessions 6</label>
+            </value>
+            <value>
+                <fullName>Demo Jam</fullName>
+                <default>false</default>
+                <label>Demo Jam</label>
+            </value>
+            <value>
+                <fullName>Sponsor Hour</fullName>
+                <default>false</default>
+                <label>Sponsor Hour</label>
+            </value>
+            <value>
+                <fullName>Closing Ceremony</fullName>
+                <default>false</default>
+                <label>Closing Ceremony</label>
             </value>
             <value>
                 <fullName>Event Feedback</fullName>

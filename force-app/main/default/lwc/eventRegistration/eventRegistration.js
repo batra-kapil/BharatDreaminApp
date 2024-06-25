@@ -16,11 +16,16 @@ export default class EventRegistration extends LightningElement {
     @api eventId;
 
     email;
+    password;
     twitter;
     attendeeId;
 
     handleEmailChange(event) {
         this.email = event.detail.value?.trim();
+    }
+
+    handlePasswordChange(event) {
+        this.password = event.detail.value?.trim();
     }
 
     handleTwitterChange(event) {
@@ -46,18 +51,21 @@ export default class EventRegistration extends LightningElement {
 
     moveToStep2() {
         const emailEle = this.template.querySelector(".email");
-        if (this.email) {
+        const passwordEle = this.template.querySelector(".password");
+        if (this.email && this.password) {
             emailEle.setCustomValidity("");
             emailEle.reportValidity();
+            passwordEle.setCustomValidity("");
+            passwordEle.reportValidity();
             this.showSpinner = true;
-            getAttendeeByEmail({ email: this.email, eventId: this.eventId })
+            getAttendeeByEmail({ email: this.email, eventId: this.eventId, password: this.password })
                 .then((result) => {
                     const resultObj = JSON.parse(result);
 
                     if (!resultObj.attendeeId) {
                         LightningAlert.open({
                             message:
-                                "If you previously registered for this event, please check the email you entered. If not, please proceed to the registration desk.",
+                                "If you previously registered for this event, please check the email and password you entered. If not, please proceed to the registration desk.",
                             theme: "error",
                             label: "Unable to find your registration"
                         });
@@ -97,9 +105,12 @@ export default class EventRegistration extends LightningElement {
                 .finally(() => {
                     this.showSpinner = false;
                 });
-        } else {
+        } else if(!this.email) {
             emailEle.setCustomValidity("Email address is required");
             emailEle.reportValidity();
+        } else if(!this.password) {
+            passwordEle.setCustomValidity("Password is required");
+            passwordEle.reportValidity();
         }
     }
 

@@ -13,12 +13,12 @@ public without sharing class EventAppCtrl {
     }
 
     @AuraEnabled
-    public static String getAttendeeByEmail(String email, String eventId) {
+    public static String getAttendeeByEmail(String email, String eventId, String password) {
         Map<String, Object> result = new Map<String, Object>();
         List<Event_Attendees__c> attendees = [
             SELECT Id, Name, AttendeeExtId__c, Checked_In__c, Pre_Registered__c
             FROM Event_Attendees__c
-            WHERE Email_Address__c = :email AND Trailblazer_Event__c = :eventId
+            WHERE Email_Address__c = :email AND Trailblazer_Event__c = :eventId AND Unique_Key__c =:password
         ];
         Trailblazer_Event__c event = [
             SELECT Id, Check_In_Closed__c
@@ -36,8 +36,8 @@ public without sharing class EventAppCtrl {
     @AuraEnabled(cacheable=true)
     public static List<Event_Activity__c> getEventActivities(String attendeeId) {
         return [
-            SELECT Id, Activity_Description__c, Points__c 
-            FROM Event_Activity__c 
+            SELECT Id, Activity_Description__c, Points__c
+            FROM Event_Activity__c
             WHERE Event_Attendee__c = :attendeeId
         ];
     }
@@ -120,7 +120,7 @@ public without sharing class EventAppCtrl {
             insert ea;
 
             List<Event_Attendees__c> attendee=[Select Points__c, Id from Event_Attendees__c WHERE Id=:attendeeId limit 1];
-            
+
             if(attendee.size() > 0){
                 attendee[0].Points__c += points;
             }
@@ -550,7 +550,7 @@ public without sharing class EventAppCtrl {
             FROM Trailblazer_Event__c
             WHERE Active__c = TRUE
         ];
-        
+
             if(events[0].Event_Phase__c=='Booths and Sessions' || events[0].Event_Phase__c=='Booths and Sessions 2' || events[0].Event_Phase__c=='Booths and Sessions 3')
             {
                 validSlot=1;
