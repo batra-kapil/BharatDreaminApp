@@ -8,11 +8,13 @@
           "attributes" : {
             "backgroundImageConfig" : "",
             "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "dxpStyle" : { },
             "sectionConfig" : "{\"UUID\":\"58e2fc8d-4f46-4d1c-8396-1c4f18ee3f90\",\"columns\":[{\"UUID\":\"470c5e22-38a3-413c-9ddf-3f7538faf65f\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}"
           },
           "children" : [ {
             "children" : [ {
               "attributes" : {
+                "dxpStyle" : { },
                 "imageInfo" : "",
                 "logoWidth" : 250
               },
@@ -23,6 +25,7 @@
               "attributes" : {
                 "cancelLinkLabel" : "Already have an account?",
                 "confirmPasswordLabel" : "Confirm Password",
+                "dxpStyle" : { },
                 "emailLabel" : "Email",
                 "firstnameLabel" : "First Name",
                 "includePasswordField" : true,
@@ -53,6 +56,7 @@
           "attributes" : {
             "customHeadTags" : "",
             "description" : "",
+            "dxpStyle" : { },
             "pageTitle" : "Register",
             "recordId" : "{!recordId}"
           },
@@ -69,6 +73,7 @@
       "id" : "40898900-4b30-4818-9f35-76812167e3c4",
       "type" : "component"
     },
+    "dataProviders" : [ ],
     "themeLayoutType" : "Inner",
     "viewType" : "self-register"
   }

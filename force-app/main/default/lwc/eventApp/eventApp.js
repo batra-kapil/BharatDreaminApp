@@ -1,7 +1,7 @@
-import { LightningElement } from "lwc";
+import { LightningElement, wire, track } from "lwc";
 import SFLOGO from "@salesforce/resourceUrl/sf_logo";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-
+import getUserPoints from "@salesforce/apex/EventAppCtrl.getUserPoints";
 import getActiveEvent from "@salesforce/apex/EventAppCtrl.getActiveEvent";
 import getAttendeeById from "@salesforce/apex/EventAppCtrl.getAttendeeById";
 
@@ -12,6 +12,10 @@ const QUESTS = "QS";
 const ATTENDEEID_LOCALSTORAGE = "attendeeId_<event_name>";
 
 export default class EventApp extends LightningElement {
+    @track userPoints;
+    @track error;
+
+   
     phase;
     currentTab = WHATSON;
     sfLogo = SFLOGO;
@@ -28,7 +32,23 @@ export default class EventApp extends LightningElement {
     whatsOn;
     preRegistered = false;
     redeem;
+    accountName;
+    //error;
+
+    @wire(getUserPoints, { attendeeId: '$attendeeId' })
+    wiredAccountName({ error, data }) {
+        if (data) {
+            this.userPoints = data;
+            this.error = undefined;
+        } else if (error) {
+            this.error = error;
+            this.userPoints = undefined;
+        }
+        console.log('##user Points '+this.userPoints);
+    }
+    
     async connectedCallback() {
+        console.log('##sf logo '+this.sfLogo);
         console.log('##try 1');
         try {
             const eventResult = await getActiveEvent();

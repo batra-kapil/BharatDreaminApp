@@ -8,13 +8,14 @@
           "attributes" : {
             "backgroundImageConfig" : "",
             "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "dxpStyle" : { },
             "sectionConfig" : "{\"UUID\":\"d363563d-7f8c-43f1-b0d0-e29b1250ec70\",\"columns\":[{\"UUID\":\"a7845d8a-ad4f-4f2d-91b9-1ef77f24eefd\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}"
           },
           "children" : [ {
             "children" : [ {
               "attributes" : { },
               "definition" : "c:eventApp",
-              "id" : "1cf6de9f-d482-4a17-91c6-3a8b2524e8e2",
+              "id" : "9aa4c04d-2df2-4ff3-9ef1-ce28771b6c95",
               "type" : "component"
             } ],
             "id" : "a7845d8a-ad4f-4f2d-91b9-1ef77f24eefd",
@@ -35,6 +36,7 @@
           "attributes" : {
             "customHeadTags" : "",
             "description" : "",
+            "dxpStyle" : { },
             "pageTitle" : "Home",
             "recordId" : "{!recordId}"
           },
@@ -51,6 +53,7 @@
       "id" : "34a61aba-c78f-4442-8236-83b17d78a250",
       "type" : "component"
     },
+    "dataProviders" : [ ],
     "themeLayoutType" : "rw19PpMnuZapxgaQTPFmwGb0zZzyOl",
     "viewType" : "home"
   }

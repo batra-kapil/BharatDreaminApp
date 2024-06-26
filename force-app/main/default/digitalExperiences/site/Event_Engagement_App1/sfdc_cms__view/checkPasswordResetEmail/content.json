@@ -8,11 +8,13 @@
           "attributes" : {
             "backgroundImageConfig" : "",
             "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "dxpStyle" : { },
             "sectionConfig" : "{\"UUID\":\"233146a6-1bd7-4ee2-b8d6-35a162f0c4ba\",\"columns\":[{\"UUID\":\"a5186a49-a95e-4ddc-ab1a-d7e7b8e74fc8\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}"
           },
           "children" : [ {
             "children" : [ {
               "attributes" : {
+                "dxpStyle" : { },
                 "imageInfo" : "",
                 "logoWidth" : 250
               },
@@ -22,6 +24,7 @@
             }, {
               "attributes" : {
                 "checkEmailMessage" : "Check the email account associated with your username for the link to reset your password. If you didn't get an email, check your Spam folder. Or contact your administrator.",
+                "dxpStyle" : { },
                 "returnButtonLabel" : "Back to login",
                 "titleLabel" : "Now check your email"
               },
@@ -47,6 +50,7 @@
           "attributes" : {
             "customHeadTags" : "",
             "description" : "",
+            "dxpStyle" : { },
             "pageTitle" : "Check Password",
             "recordId" : "{!recordId}"
           },
@@ -63,6 +67,7 @@
       "id" : "f1a91c73-9e47-49dd-9b46-4b083d560594",
       "type" : "component"
     },
+    "dataProviders" : [ ],
     "themeLayoutType" : "Inner",
     "viewType" : "check-password"
   }

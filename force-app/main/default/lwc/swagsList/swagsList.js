@@ -14,9 +14,11 @@ export default class SwagsList extends LightningElement {
 
     getData() {
         this.userDetails = null;
+        console.log('##record '+this.recordId);
         getSwags({ accountId: this.recordId })
            .then(result => {
                 this.userDetails = result;
+                console.log('##userdetails '+this.userDetails);
                 this.userDetails.swagsList.forEach((swag, index) => {
                     swag.class = `container ${index !== 0 ? 'container-with-radius' : ''} slds-m-bottom_medium slds-p-vertical_large`;
                 });

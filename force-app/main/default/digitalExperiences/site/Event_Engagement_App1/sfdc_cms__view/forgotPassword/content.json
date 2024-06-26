@@ -8,11 +8,13 @@
           "attributes" : {
             "backgroundImageConfig" : "",
             "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "dxpStyle" : { },
             "sectionConfig" : "{\"UUID\":\"af9dacd5-2328-4508-ba87-5ba564d1a786\",\"columns\":[{\"UUID\":\"a3d1c060-9741-4fc4-bcdc-f7c451f8ef24\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}"
           },
           "children" : [ {
             "children" : [ {
               "attributes" : {
+                "dxpStyle" : { },
                 "imageInfo" : "",
                 "logoWidth" : 250
               },
@@ -23,6 +25,7 @@
               "attributes" : {
                 "cancelButtonLabel" : "Cancel",
                 "checkEmailUrl" : "./CheckPasswordResetEmail",
+                "dxpStyle" : { },
                 "instructionsLabel" : "To reset your password, enter your username. We'll send a reset-password link to the email address associated with your account.",
                 "submitButtonLabel" : "Reset",
                 "titleLabel" : "Forgot your password?",
@@ -50,6 +53,7 @@
           "attributes" : {
             "customHeadTags" : "",
             "description" : "",
+            "dxpStyle" : { },
             "pageTitle" : "Forgot Password",
             "recordId" : "{!recordId}"
           },
@@ -66,6 +70,7 @@
       "id" : "91710139-4df7-4f2c-9007-17d1256bbc60",
       "type" : "component"
     },
+    "dataProviders" : [ ],
     "themeLayoutType" : "Inner",
     "viewType" : "forgot-password"
   }

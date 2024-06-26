@@ -8,25 +8,27 @@
         <template if:true={attendeeId}>
             <div class="slds-text-body_regular white">
                 <div class="slds-grid">
-                    <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-col slds-size_1-of-3">
                         <img
                             src={sfLogo}
-                            class="slds-m-bottom_xx-small logo-small"
+                            class="slds-m-bottom_xx-small logo-small" onclick={refreshPage}
                         />
-                        <div class="slds-p-left_xx-small slds-m-top_x-small" style="color:black; font-size:1rem; font-weight:bold !important">
-                            Hi {attendeeName}
-                        </div>
                     </div>
                     <div
-                        class="slds-col slds-size_1-of-2 slds-text-align_right"
-                    >
+                        class="slds-col slds-size_1-of-3 slds-text-align_right">
                     <lightning-button-icon
-        icon-name="standard:home"
+        icon-name="standard:agent_home"
         alternative-text="Refresh"
         onclick={refreshPage}
-        size="large" style="color:white">
+        size="large" class="custom-button">
     </lightning-button-icon>
                     </div>
+                </div>
+            </div>
+            <div class="header">
+                <div class="header-content">
+                    <span class="user-name">Hi {attendeeName}</span>
+                    <span class="user-points">{userPoints} points</span>
                 </div>
             </div>
         </template>

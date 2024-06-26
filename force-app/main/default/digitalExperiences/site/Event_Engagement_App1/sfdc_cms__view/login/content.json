@@ -8,37 +8,18 @@
           "attributes" : {
             "backgroundImageConfig" : "",
             "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "dxpStyle" : { },
             "sectionConfig" : "{\"UUID\":\"75f969f1-10c9-4065-b671-3ae754f004a1\",\"columns\":[{\"UUID\":\"f13af198-d4f6-4f9e-a457-d39ab7155724\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}"
           },
           "children" : [ {
             "children" : [ {
               "attributes" : {
+                "dxpStyle" : { },
                 "imageInfo" : "",
                 "logoWidth" : 250
               },
               "definition" : "dxp_content_layout:siteLogo",
               "id" : "da9bbaf2-edf7-46bc-8dee-2d6654a6e853",
-              "type" : "component"
-            }, {
-              "attributes" : {
-                "forgotPasswordLabel" : "Forgot your password?",
-                "forgotPasswordUrl" : "/ForgotPassword",
-                "loginButtonLabel" : "Log In",
-                "passwordLabel" : "Password",
-                "selfRegisterLabel" : "Not a member?",
-                "selfRegisterUrl" : "/SelfRegister",
-                "startUrl" : "",
-                "usernameLabel" : "Username"
-              },
-              "definition" : "community_login:loginForm",
-              "id" : "fb222663-e549-44db-a94e-22893e69cfcf",
-              "type" : "component"
-            }, {
-              "attributes" : {
-                "employeeLoginLinkLabel" : "Are you an employee? Log in"
-              },
-              "definition" : "community_login:employeeLoginLink",
-              "id" : "66fc162e-07f9-43ce-ae4e-03892dd04a9a",
               "type" : "component"
             } ],
             "id" : "f13af198-d4f6-4f9e-a457-d39ab7155724",
@@ -59,6 +40,7 @@
           "attributes" : {
             "customHeadTags" : "",
             "description" : "",
+            "dxpStyle" : { },
             "pageTitle" : "Login",
             "recordId" : "{!recordId}"
           },
@@ -75,6 +57,7 @@
       "id" : "222bde03-41ba-48d6-93f4-5445f800e722",
       "type" : "component"
     },
+    "dataProviders" : [ ],
     "themeLayoutType" : "Inner",
     "viewType" : "login-main"
   }

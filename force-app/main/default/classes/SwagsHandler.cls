@@ -77,7 +77,7 @@ public with sharing class SwagsHandler {
                     product.Name,
                     points,
                     Integer.valueOf(product.Quantity_Available__c) <= 0,
-                    orgUrl + '/resource/' + EncodingUtil.urlEncode(product.Static_Resource_Name__c, 'UTF-8'),
+                    '/resource/' + EncodingUtil.urlEncode(product.Static_Resource_Name__c, 'UTF-8'),
                     Integer.valueOf(product.Points_Needed__c),
                     !(points >= Integer.valueOf(product.Points_Needed__c) && Integer.valueOf(product.Quantity_Available__c) > 0),
                     redeemProductMap.containsKey(product.Id)

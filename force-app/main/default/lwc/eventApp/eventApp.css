@@ -1,6 +1,3 @@
-.header {
-    background: #abe2d0; /** Use your event's theme color **/
-}
 
 .white {
     color: white;
@@ -73,4 +70,37 @@
     margin-top: 20px;
     text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.user-name {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.user-points {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.slds-button_icon {
+    background-color: blue !important;
+    border-radius: 50% !important; /* Makes the background a circle */
+    padding: 0.5rem !important; /* Adjust padding as needed */
+}
+
+.slds-button_icon .slds-icon {
+    fill: white !important;
 }

@@ -2,7 +2,7 @@ import { LightningElement, api } from "lwc";
 import saveActivity from "@salesforce/apex/EventAppCtrl.saveActivity";
 import saveBoothAttendance from "@salesforce/apex/EventAppCtrl.saveBoothAttendance";
 import LightningAlert from "lightning/alert";
-import getActiveEvent from "@salesforce/apex/EventAppCtrl.getActiveEvent";
+
 
 export default class EventBooth extends LightningElement {
     @api session_slot = "1";
@@ -112,16 +112,13 @@ export default class EventBooth extends LightningElement {
     alreadyVoted;
 
     feedbackOptions = [
-        { label: "😍 I loved it 😍", value: "5" },
-        { label: "🤩 It was good 🤩", value: "4" },
-        { label: "🙂 It was OK 🙂", value: "3" },
-        { label: "😒 It was not bad 😒", value: "2" },
-        { label: "🤮 I hated it 🤮", value: "1" }
+        { label: "It was fantastic!", value: "5" },
+        { label: "It met my expectations.", value: "4" },
+        { label: "It was okay.", value: "3" },
+        { label: "It was just average.", value: "2" },
+        { label: "It was disappointing.", value: "1" }
     ];
 
-    async connectedCallback() {
-        
-    }
 
     points=0;
     activityDescription;
@@ -129,7 +126,7 @@ export default class EventBooth extends LightningElement {
         this.showSpinner = true;
         console.log('##phase'+this.phase);
         this.points=250;
-        this.activityDescription='You gave feedback for sponsor booth with code '+this.sessionCode;
+        this.activityDescription='You gave feedback for sponsor booth  ';
         console.log('##points'+this.points);
         saveActivity({
             eventId: this.eventId,
@@ -138,7 +135,8 @@ export default class EventBooth extends LightningElement {
             activitySubType: this.voteType,
             value: JSON.stringify(event.detail.votes),
             points:this.points,
-            activityDescription : this.activityDescription
+            activityDescription : this.activityDescription,
+            sessionCode : this.sessionCode
         })
             .then((result) => {
                 if (result) {

@@ -1,5 +1,6 @@
 import { LightningElement, api } from "lwc";
 import saveActivity from "@salesforce/apex/EventAppCtrl.saveActivity";
+import getSessionName from "@salesforce/apex/EventAppCtrl.getSessionName";
 import saveSessionBoothAttendance from "@salesforce/apex/EventAppCtrl.saveSessionBoothAttendance";
 import saveWorkshopAttendance from "@salesforce/apex/EventAppCtrl.saveWorkshopAttendance";
 import LightningAlert from "lightning/alert";
@@ -273,7 +274,7 @@ export default class EventWhatsOn extends LightningElement {
             items: [
                 {
                     id: 1,
-                    title: "Sponsorship",
+                    title: "Sponsor Hour",
                     image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
                     time: "4:30PM",
                     location: "Sponsorship Hall"
@@ -372,11 +373,11 @@ export default class EventWhatsOn extends LightningElement {
     alreadyVoted;
 
     feedbackOptions = [
-        { label: "😍 I loved it 😍", value: "5" },
-        { label: "🤩 It was good 🤩", value: "4" },
-        { label: "🙂 It was OK 🙂", value: "3" },
-        { label: "😒 It was not bad 😒", value: "2" },
-        { label: "🤮 I hated it 🤮", value: "1" }
+        { label: "It was fantastic!", value: "5" },
+        { label: "It met my expectations.", value: "4" },
+        { label: "It was okay.", value: "3" },
+        { label: "It was just average.", value: "2" },
+        { label: "It was disappointing.", value: "1" }
     ];
 
     async connectedCallback() {
@@ -499,12 +500,12 @@ export default class EventWhatsOn extends LightningElement {
             default:
                 break;
         }
-        if(this.slot==1 || this.slot==2 || this.slot==3)
+        if(this.slot===1 || this.slot===2 || this.slot===3)
             {
                 this.workshopSlot=1;
                 this.workshop_slot='1';
             }
-        else if(this.slot==4 || this.slot==5 || this.slot==6)
+        else if(this.slot===4 || this.slot===5 || this.slot===6)
         {
             this.workshopSlot=2;
             this.workshop_slot='2';
@@ -644,6 +645,30 @@ export default class EventWhatsOn extends LightningElement {
 
     points=0;
     activityDescription;
+    sessionName;
+
+    getSession()
+    {
+        getSessionName({
+            eventId: this.eventId,
+            sessionCode : this.sessionCode
+        })
+            .then((result) => {
+                if (result) {
+                    this.sessionName=result;
+                    console.log('##session name '+this.sessionName);
+                }
+            })
+            .catch(() => {
+                LightningAlert.open({
+                    message:
+                        "An error occurred when saving your data. Please reach out to the event staff.",
+                    theme: "error",
+                    label: "An error occurred"
+                });
+            });
+            console.log('##session name outer '+this.sessionName);
+    }
     handleVote(event) {
         this.showSpinner = true;
         console.log('##phase'+this.phase);
@@ -655,39 +680,34 @@ export default class EventWhatsOn extends LightningElement {
             if(this.phase.includes('Booths and Sessions'))
                 {
                     this.points=500;
-                    this.activityDescription='You gave feedback for session speaker with session code '+this.sessionCode;
+                    this.activityDescription='You gave feedback for session ';
                 }
                 if(this.phase.includes('Demo Jam'))
                     {
                         this.points=1000;
-                        this.activityDescription='You gave feedback for demo jam with demo jam code '+this.sessionCode;
+                        this.activityDescription='You gave feedback for demo jam ';
                     }
-                    // if(this.phase.includes('Booth'))
-                    //     {
-                    //         this.points=250;
-                    //         this.activityDescription='You gave feedback for booth with booth code '+this.sessionCode;
-                    //     }
                         if(this.phase.includes('Sponsor'))
                             {
                                 this.points=1000;
-                                this.activityDescription='You gave feedback for sponsor hour session with session code '+this.sessionCode;
+                                this.activityDescription='You gave feedback for sponsor hour session';
                             }
                             if(this.phase.includes('Closing'))
                                 {
                                     this.points=2000;
-                                    this.activityDescription='You gave feedback for closing ceremony with code '+this.sessionCode;
+                                    this.activityDescription='You gave feedback for closing ceremony';
                                 }
                                 if(this.phase.includes('Event Feedback'))
                                     {
                                         this.points=500;
                                         this.activityDescription='You gave feedback for overall event';
                                     }
-                                    if(this.workshopSlot!=0)
+                                    if(this.showWorkshop===true)
                                         {
                                             this.points=500;
-                                            this.activityDescription='You gave feedback for workshop with workshop code '+this.sessionCode;
+                                            this.activityDescription='You gave feedback for session ';
                                         }
-                console.log('##points'+this.points);
+                console.log('##description '+this.activityDescription);
         saveActivity({
             eventId: this.eventId,
             attendeeId: this.attendeeId,
@@ -695,7 +715,8 @@ export default class EventWhatsOn extends LightningElement {
             activitySubType: this.voteType,
             value: JSON.stringify(event.detail.votes),
             points:this.points,
-            activityDescription : this.activityDescription
+            activityDescription : this.activityDescription,
+            sessionCode : this.sessionCode
         })
             .then((result) => {
                 if (result) {
@@ -736,7 +757,7 @@ export default class EventWhatsOn extends LightningElement {
     type;
     showFeedbackForm(sessionCode) {
         this.slotToSend=this.slot;
-                this.type='Session';
+        this.type='Session';
         console.log('##event id '+this.eventId);
         this.showSpinner = true;
         saveSessionBoothAttendance({

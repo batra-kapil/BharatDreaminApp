@@ -9,6 +9,7 @@
           "attributes" : {
             "backgroundImageConfig" : "",
             "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "dxpStyle" : { },
             "sectionConfig" : "{\"UUID\":\"6ae1efd2-8cfe-4b8a-bda7-4fb19ae0f6d9\",\"columns\":[{\"UUID\":\"7fd7899e-4056-4161-839b-ef4b290fbcf6\",\"columnName\":\"Column 1\",\"columnKey\":\"headerSection\",\"columnWidth\":\"12\",\"seedComponents\":null}]}"
           },
           "children" : [ {
@@ -30,6 +31,7 @@
           "attributes" : {
             "backgroundImageConfig" : "",
             "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "dxpStyle" : { },
             "sectionConfig" : "{\"UUID\":\"73509ecf-2539-445b-a553-921e6d4d1009\",\"columns\":[{\"UUID\":\"e72f7d82-5724-4054-9f0f-165665fc9bfb\",\"columnName\":\"Column 1\",\"columnKey\":\"footerSection\",\"columnWidth\":\"12\",\"seedComponents\":null}]}"
           },
           "children" : [ {

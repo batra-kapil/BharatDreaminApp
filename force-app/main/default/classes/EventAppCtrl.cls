@@ -11,6 +11,11 @@ public without sharing class EventAppCtrl {
         }
         return null;
     }
+    @AuraEnabled(cacheable=true)
+    public static Decimal getUserPoints(Id attendeeId) {
+        Event_Attendees__c acc = [SELECT Points__c FROM Event_Attendees__c WHERE Id = :attendeeId LIMIT 1];
+        return acc.Points__c;
+    }
 
     @AuraEnabled
     public static String getAttendeeByEmail(String email, String eventId, String password) {
@@ -96,6 +101,24 @@ public without sharing class EventAppCtrl {
     }
 
     @AuraEnabled
+    public static string getSessionName(String sessionCode, String eventId){
+        try {
+            String name='';
+            List<Session_Booth__c> sessionsAndBooths = [
+                SELECT Id, Name
+                FROM Session_Booth__c
+                WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId
+                LIMIT 1
+            ];
+            system.debug('##event id '+ eventId);
+            name = sessionsAndBooths[0].Name;
+            return name;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
     public static Boolean saveActivity(
         String eventId,
         String attendeeId,
@@ -104,9 +127,22 @@ public without sharing class EventAppCtrl {
         String value,
         String additionalInfo,
         Integer points,
-        String activityDescription
+        String activityDescription,
+        String sessionCode
     ) {
         try {
+            List<Session_Booth__c> sessionsAndBooths = [
+                SELECT Id, Name
+                FROM Session_Booth__c
+                WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId
+                LIMIT 1
+            ];
+            system.debug('##event id '+ eventId);
+            String name ='';
+            if(sessionsAndBooths.size()==1)
+            {
+                name= sessionsAndBooths[0].Name;
+            }
             System.debug('##points '+points);
             Event_Activity__c ea = new Event_Activity__c();
             ea.Trailblazer_Event__c = eventId;
@@ -116,7 +152,7 @@ public without sharing class EventAppCtrl {
             ea.Value__c = value;
             ea.Additional_Info__c = additionalInfo;
             ea.Points__c=points;
-            ea.Activity_Description__c=activityDescription;
+            ea.Activity_Description__c=activityDescription+name;
             insert ea;
 
             List<Event_Attendees__c> attendee=[Select Points__c, Id from Event_Attendees__c WHERE Id=:attendeeId limit 1];
@@ -187,6 +223,7 @@ public without sharing class EventAppCtrl {
                     String attendeeType;
                     String activityDescription='Secret';
                     Integer points=0;
+                    String sessionCode='';
                     if (attendees[0].Is_Speaker__c == true) {
                         attendeeType = 'Speaker';
                     } else if (attendees[0].Is_Volunteer__c == true) {
@@ -200,7 +237,8 @@ public without sharing class EventAppCtrl {
                         secret,
                         attendeeType,
                         points,
-                        activityDescription
+                        activityDescription,
+                        sessionCode
                     );
                     if (saved == true) {
                         cr.isSuccess = true;
