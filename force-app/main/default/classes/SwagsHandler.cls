@@ -1,4 +1,4 @@
-public with sharing class SwagsHandler {
+public without sharing class SwagsHandler {
 
     public class SwagsException extends Exception {}
 

@@ -1,11 +1,107 @@
 <template>
-    <div class="custom-card">
-    <lightning-card title="Meet Our Speakers">
-        <!-- <lightning-datatable
-            data={data}
-            columns={columns}
-            key-field="Id">
-        </lightning-datatable> -->
-    </lightning-card>
-</div>
+    <template for:each={configs} for:item="config">
+        <div key={config.slot}>
+            <template lwc:if={config.active}>
+                <template lwc:if={config.is_community_session}>
+                    <article>
+                            <div class="slds-card__header slds-grid">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                    <div class="slds-media__figure">
+                                        <lightning-icon icon-name="standard:announcement" variant="border-filled"
+                                            alternative-text={config.title} slot="actions" size="xx-small" ></lightning-icon>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div class="slds-text-heading_small color-title">{config.title}</div>
+                                    </div>
+                                </header>
+                            </div>
+                                <lightning-layout multiple-rows horizontal-align="stretch" vertical-align="stretch">
+                                    <template for:each={config.items} for:item="speaker">
+                                        <lightning-layout-item key={speaker.id} padding="around-small" size="6"
+                                            medium-device-size="6" large-device-size="3" small-device-size="6"
+                                            class="layout-item-speaker-card">
+                                            <article class="slds-card slds-var-p-vertical_medium">
+                                                <lightning-layout multiple-rows horizontal-align="space">
+                                                    <lightning-layout-item size="12" 
+                                                        class="align-center">
+                                                        <div class="circle-image-wrapper" style={speaker.style}>
+                                                        </div>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="12"
+                                                        class="align-left">
+                                                        <div class="slds-text-heading_medium title-speaker">
+                                                            {speaker.name}</div>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="12"
+                                                        class="align-left">
+                                                        <div
+                                                            class="slds-text-heading_medium title-session">
+                                                            {speaker.sessionTitle}</div>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="12"
+                                                        class="align-left">
+                                                        <lightning-icon size="xx-small" icon-name="standard:location"></lightning-icon>
+                                                        <div
+                                                            class="slds-var-m-left_xx-small color-location" style="font-size:.6rem">
+                                                            {speaker.sessionLocation}</div>
+                                                    </lightning-layout-item>
+                                                </lightning-layout>
+                                            </article>
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout>
+                        </article>
+                </template>
+                <template lwc:else>
+                    <lightning-layout horizontal-align="space" multiple-rows>
+                        <template for:each={config.items} for:item="item">
+                            <lightning-layout-item key={item.id}  size="12"
+                            medium-device-size="12" large-device-size="6" small-device-size="12" padding="around-small">
+                                
+                                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                            <div class="slds-media__figure">
+                                                <lightning-icon icon-name="standard:announcement"
+                                                    variant="border-filled" alternative-text={item.title}
+                                                    slot="actions" size="small"></lightning-icon>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <div class="slds-text-heading_medium color-title">{item.title}</div>
+                                            </div>
+                                        </header>
+                                        <lightning-layout multiple-rows horizontal-align="stretch"
+                                            vertical-align="stretch">
+                                            <lightning-layout-item size="12" padding="around-small">
+                                                <article class="slds-card slds-var-p-around_medium">
+                                                    <img src={item.image_url} class="image-banner" />
+                                                </article>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="12"
+                                            medium-device-size="12" large-device-size="6" small-device-size="12" padding="around-small">
+                                                <article class="slds-card align-left">
+                                                    <lightning-icon size="small" icon-name="standard:today"
+                                                        class="slds-var-m-right_xx-small slds-align_absolute-center"></lightning-icon>
+                                                    <div
+                                                        class="slds-text-heading_small slds-var-m-left_xx-small slds-align_absolute-center color-time">
+                                                        {item.time}</div>
+                                                </article>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="12"
+                                            medium-device-size="12" large-device-size="6" small-device-size="12" padding="around-small">
+                                                <article class="slds-card align-left">
+                                                    <lightning-icon size="small" icon-name="standard:address"
+                                                        class="slds-var-m-right_xx-small slds-align_absolute-center"></lightning-icon>
+                                                    <div
+                                                        class="slds-var-m-left_xx-small slds-align_absolute-center color-location">
+                                                        {item.location}</div>
+                                                </article>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                              
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </template>
+            </template>
+        </div>
+    </template>
 </template>

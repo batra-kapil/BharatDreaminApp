@@ -92,14 +92,14 @@
             ></c-event-speakers>
         </template>
         <template if:true={showSponsors}>
-            <c-qr-scanner></c-qr-scanner>
-            <!-- <c-event-sponsors
+            <!-- <c-qr-scanner></c-qr-scanner> -->
+            <c-event-sponsors
                 event-id={eventId}
                 attendee-id={attendeeId}
                 team-name={teamName}
                 attendee-reg-id={attendeeRegId}
                 pre-registered={preRegistered}
-            ></c-event-sponsors> -->
+            ></c-event-sponsors>
         </template>
         <template if:true={showBooth}>
             <c-event-booth

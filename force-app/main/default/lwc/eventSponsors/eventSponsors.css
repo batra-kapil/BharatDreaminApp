@@ -74,3 +74,140 @@
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+.teamNameBanner {
+    background: #1e40a1;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    margin-top: 25px;
+}
+
+.semi-white {
+    background-color: #ffffff8f;
+}
+
+.attendedSession {
+    background: #248968;
+    color: white;
+    padding: 5px;
+}
+
+.fixed {
+    background: white;
+    border-radius: 10px 10px 0 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 1px solid gray;
+    border-bottom: 0;
+    z-index: 9;
+}
+
+.img {
+    margin: 0 auto;
+}
+.align-center {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+.circle-image-wrapper {
+    position: relative;
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+}
+.card-event {
+    background-color:#ebf5fe;
+}
+.color-title {
+    color: #321977;
+}
+.color-time, .color-location {
+    color: #281d55;
+}
+.layout-item-speaker-card {
+    display: flex;
+}
+.title-speaker {
+    color: #321977;
+    font-size: 1.5rem;
+}
+.title-session {
+    color: #281d55;
+    font-size: 1.15rem;
+}
+.image-banner {
+    height: 30rem;
+    width: -webkit-fill-available;
+}
+.sponsor-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    /* transform: rotate(-5deg); */
+}
+
+.sponsor-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    clip-path: polygon(0 0, 100% 0, 75% 100%, 25% 100%);
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.sponsor-card:hover::before {
+    opacity: 0.5;
+}
+
+.sponsor-card:hover {
+    /* transform: translateY(-10px) rotate(-5deg); */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    /* transform: rotate(5deg); */
+}
+
+.sponsor-logo {
+    max-width: 100px;
+    max-height: 100px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sponsor-card:hover .sponsor-logo {
+    transform: scale(1.1);
+}
+
+.sponsor-name {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+ 
+
+
+
+
