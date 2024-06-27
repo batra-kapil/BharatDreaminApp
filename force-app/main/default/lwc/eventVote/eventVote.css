@@ -107,5 +107,12 @@
     font-weight: bold;
     margin-bottom: 0;
 }
+.slds-radio--button, .slds-radio_button {
+    line-height: 2rem !important;
+}
+.slds-button {
+    --slds-c-button-line-height: 2.625rem;
+    font-weight: 100 !important;
+}
 
 

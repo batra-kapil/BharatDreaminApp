@@ -5,8 +5,14 @@ import saveSessionBoothAttendance from "@salesforce/apex/EventAppCtrl.saveSessio
 import saveWorkshopAttendance from "@salesforce/apex/EventAppCtrl.saveWorkshopAttendance";
 import LightningAlert from "lightning/alert";
 import getActiveEvent from "@salesforce/apex/EventAppCtrl.getActiveEvent";
+import DEMOJAM from "@salesforce/resourceUrl/demoJam";
+import SPONSORHOUR from "@salesforce/resourceUrl/sponsorHour";
+import CLOSINGCEREMONY from "@salesforce/resourceUrl/closingCeremony";
 
 export default class EventWhatsOn extends LightningElement {
+    demoJam=DEMOJAM;
+    sponsorHour=SPONSORHOUR;
+    closingCeremony=CLOSINGCEREMONY;
     @api session_slot = "1";
     @api workshop_slot = "0";
     slot;
@@ -261,7 +267,7 @@ export default class EventWhatsOn extends LightningElement {
                 {
                     id: 1,
                     title: "Demo Jam: Find the best salesforce app",
-                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    image_url: this.demoJam,
                     time: "1:30PM",
                     location: "Techies Innovation Hall"
                 }
@@ -275,7 +281,7 @@ export default class EventWhatsOn extends LightningElement {
                 {
                     id: 1,
                     title: "Sponsor Hour",
-                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    image_url: this.sponsorHour,
                     time: "4:30PM",
                     location: "Sponsorship Hall"
                 }
@@ -289,7 +295,7 @@ export default class EventWhatsOn extends LightningElement {
                 {
                     id: 1,
                     title: "Closing Ceremony",
-                    image_url: "https://media.licdn.com/dms/image/D5622AQFN6a68l1SVZQ/feedshare-shrink_800/0/1716551444378?e=2147483647&v=beta&t=YNJTtxIc-ZY0YZfihUDxpsQMzzHXBNSHPAtvBl1ROh0",
+                    image_url: this.closingCeremony,
                     time: "4:30PM",
                     location: "Main Hall"
                 }
@@ -765,7 +771,8 @@ export default class EventWhatsOn extends LightningElement {
             attendeeId: this.attendeeId,
             sessionCode: sessionCode,
             slot:this.slot,
-            type:this.type
+            type:this.type,
+            sessionName:this.selectedSessionTitle
         })
             .then((result) => {
                 if (result) {
@@ -781,7 +788,7 @@ export default class EventWhatsOn extends LightningElement {
                         //     "Please sharing ";
                         this.voteOptions = [
                             {
-                                title: "How did you like the content shared?",
+                                //title: "How did you like the content shared?",
                                 name: "session_feedback" + parsedResult.message,
                                 options: this.feedbackOptions
                             }
@@ -852,7 +859,7 @@ export default class EventWhatsOn extends LightningElement {
                         //     "Please sharing ";
                         this.voteOptions = [
                             {
-                                title: "How did you like the content shared?",
+                                //title: "How did you like the content shared?",
                                 name: "session_feedback" + parsedResult.message,
                                 options: this.feedbackOptions
                             }
@@ -956,4 +963,17 @@ export default class EventWhatsOn extends LightningElement {
     closeScanner() {
         this.showScanner = false;
     }
+    showModal = false;
+    selectedSessionTitle;
+    openModal(event){
+        console.log('##show modal'+event.target.dataset.id);
+        this.selectedSessionTitle=event.target.dataset.id;
+        this.showModal = true;
+        console.log('##show modal 1');
+     }
+     closeModal()
+     {
+        this.showModal=false;
+        this.selectedSessionTitle=false;
+     }
 }

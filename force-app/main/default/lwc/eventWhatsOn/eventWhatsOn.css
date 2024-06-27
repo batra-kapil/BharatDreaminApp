@@ -88,7 +88,7 @@
     font-size: .6rem;
 }
 .image-banner {
-    height: 30rem;
+    /* height: 30rem; */
     width: -webkit-fill-available;
 }
 .custom-card {
@@ -129,5 +129,37 @@
     font-weight: bold;
     margin-bottom: 0;
 }
+.clickable-item {
+    cursor: pointer;
+}
 
+.slds-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.slds-modal__header h2 {
+    margin: 0;
+}
+.custom-button .slds-button {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 3px 6px; /* Smaller padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline-block element */
+    font-size: 10px; /* Smaller font size */
+    margin: 1px 0px; /* Smaller margin */
+    cursor: pointer; /* Pointer/hand icon */
+    border-radius: 3px; /* Slightly rounded corners */
+    transition-duration: 0.4s; /* Smooth transition */
+}
+
+.custom-button .slds-button:hover {
+    background-color: white; /* White background */
+    color: black; /* Black text */
+    border: 2px solid #4CAF50; /* Green border */
+}
 

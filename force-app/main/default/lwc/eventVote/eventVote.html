@@ -1,10 +1,4 @@
 <template>
-    <div class="custom-card">
-    <div
-        class="slds-text-align_center slds-p-top_medium slds-text-heading_small slds-m-bottom_medium"
-    >
-        {voteTitle}
-    </div>
     <template if:true={alreadyVoted}>
         <div class="slds-text-align_center slds-p-top_medium">
             <lightning-icon
@@ -33,7 +27,7 @@
                     label={voteOption.title}
                     options={voteOption.options}
                     type="button"
-                    class="slds-m-bottom_large"
+                    class="slds-m-bottom_small"
                     required="true"
                 >
                 </lightning-radio-group>
@@ -65,5 +59,4 @@
             </template> -->
         </div>
     </template>
-    </div>
 </template>
