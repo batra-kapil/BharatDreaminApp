@@ -162,4 +162,7 @@
     color: black; /* Black text */
     border: 2px solid #4CAF50; /* Green border */
 }
+button{
+    font-size: xx-small;
+}
 

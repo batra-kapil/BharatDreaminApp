@@ -681,37 +681,37 @@ export default class EventWhatsOn extends LightningElement {
         if(this.phase=='Keynote 1 Feedback')
             {
                 this.points=2000;
-                this.activityDescription='You gave feedback for keynote speakers';
+                this.activityDescription='Keynote speakers feedback';
             }
             if(this.phase.includes('Booths and Sessions'))
                 {
                     this.points=500;
-                    this.activityDescription='You gave feedback for session ';
+                    this.activityDescription='Session Feedback - ';
                 }
                 if(this.phase.includes('Demo Jam'))
                     {
                         this.points=1000;
-                        this.activityDescription='You gave feedback for demo jam ';
+                        this.activityDescription='Demo Jam Feedback - ';
                     }
                         if(this.phase.includes('Sponsor'))
                             {
                                 this.points=1000;
-                                this.activityDescription='You gave feedback for sponsor hour session';
+                                this.activityDescription='Sponsor Hour Feedback';
                             }
                             if(this.phase.includes('Closing'))
                                 {
                                     this.points=2000;
-                                    this.activityDescription='You gave feedback for closing ceremony';
+                                    this.activityDescription='Closing Ceremony Feedback';
                                 }
                                 if(this.phase.includes('Event Feedback'))
                                     {
                                         this.points=500;
-                                        this.activityDescription='You gave feedback for overall event';
+                                        this.activityDescription='Overall Event Feedback';
                                     }
                                     if(this.showWorkshop===true)
                                         {
                                             this.points=500;
-                                            this.activityDescription='You gave feedback for session ';
+                                            this.activityDescription='Session Feedback - ';
                                         }
                 console.log('##description '+this.activityDescription);
         saveActivity({
@@ -843,7 +843,8 @@ export default class EventWhatsOn extends LightningElement {
             attendeeId: this.attendeeId,
             sessionCode: sessionCode,
             slot:this.workshopSlot,
-            type:this.type
+            type:this.type,
+            sessionName :this.selectedWorkshopTitle
         })
             .then((result) => {
                 if (result) {
@@ -975,5 +976,18 @@ export default class EventWhatsOn extends LightningElement {
      {
         this.showModal=false;
         this.selectedSessionTitle=false;
+     }
+     showWorkshopModal = false;
+    selectedWorkshopTitle;
+    openWorkshopModal(event){
+        console.log('##show modal'+event.target.dataset.id);
+        this.selectedWorkshopTitle=event.target.dataset.id;
+        this.showWorkshopModal = true;
+        console.log('##show modal 1');
+     }
+     closeWorkshopModal()
+     {
+        this.showWorkshopModal=false;
+        this.selectedWorkshopTitle=false;
      }
 }

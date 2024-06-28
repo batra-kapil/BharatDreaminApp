@@ -16,13 +16,13 @@
                         <lightning-layout multiple-rows horizontal-align="stretch" vertical-align="stretch">
                             <template for:each={config.items} for:item="speaker">
 
-                                <lightning-layout-item size="6"
-                                medium-device-size="6" large-device-size="3" small-device-size="12" padding="around-small" key={speaker.id}>
+                                <lightning-layout-item size="12"
+                                medium-device-size="12" large-device-size="6" small-device-size="12" padding="around-small" key={speaker.id}>
                                     <div class="sponsor-card">
                                         <div class="card-content">
                                             <img src={speaker.logoUrl} alt="Sponsor Logo" class="sponsor-logo"/>
                                             <p class="sponsor-name">{speaker.name}</p>
-                                            <p>{speaker.sessionTitle}</p>
+                                            <p style="font-size:.6rem">{speaker.sessionTitle}</p>
                                         </div>
                                     </div>
                                 </lightning-layout-item>

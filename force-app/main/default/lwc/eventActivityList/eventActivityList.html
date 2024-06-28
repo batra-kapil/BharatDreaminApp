@@ -6,7 +6,7 @@
                 key-field="Id"
                 data={eventActivities.data}
                 columns={columns}
-                hide-checkbox-column
+                hide-checkbox-column column-widths-mode="auto"
             ></lightning-datatable>
         </template>
         <template if:true={eventActivities.error}>

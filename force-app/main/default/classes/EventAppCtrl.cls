@@ -545,46 +545,66 @@ public without sharing class EventAppCtrl {
     public static String saveBoothAttendance(
         String sessionCode,
         String attendeeId,
-        String eventId
+        String eventId,
+        String sessionName
     ) {
         CustomResponse cr = new CustomResponse();
         try {
             List<Session_Booth__c> sessionsAndBooths = [
-                SELECT Id, Type__c
+                SELECT Id, Type__c, Name
                 FROM Session_Booth__c
                 WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId and Type__c='Booth'
                 LIMIT 1
             ];
             system.debug('##event id '+ eventId);
             if (sessionsAndBooths.size() == 1) {
-                Integer points=250;
-                system.debug('##points '+points);
-                List<Session_Booth_Attendance__c> sbaList = [
-                    SELECT Id
-                    FROM Session_Booth_Attendance__c
-                    WHERE
-                        Event_Attendee__c = :attendeeId
-                        AND Code__c = :sessionCode
-                ];
-                if (sbaList.size() == 0) {
-                    cr.isSuccess = true;
-                    Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
-                    sba.Event_Attendee__c = attendeeId;
-                    sba.Session_Booth__c = sessionsAndBooths[0].Id;
-                    sba.Points__c=points;
-                    sba.Code__c = sessionCode;
-                    sba.Type__c='Booth';
-                    insert sba;
-                    cr.message = sessionsAndBooths[0].Id;
-                } else {
+                if(sessionsAndBooths[0].Name==sessionName)
+                    {
+                    Integer points=250;
+                    system.debug('##points '+points);
+                    List<Session_Booth_Attendance__c> sbaList = [
+                        SELECT Id
+                        FROM Session_Booth_Attendance__c
+                        WHERE
+                            Event_Attendee__c = :attendeeId
+                            AND Code__c = :sessionCode
+                    ];
+                    List<Event_Activity__c> eaList = [
+                            SELECT Id
+                            FROM Event_Activity__c
+                            WHERE
+                                Event_Attendee__c = :attendeeId
+                                AND Session_Code__c = :sessionCode
+                        ];
+                    if (sbaList.size() == 0) {
+                        cr.isSuccess = true;
+                        Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
+                        sba.Event_Attendee__c = attendeeId;
+                        sba.Session_Booth__c = sessionsAndBooths[0].Id;
+                        sba.Points__c=points;
+                        sba.Code__c = sessionCode;
+                        sba.Type__c='Booth';
+                        insert sba;
+                        cr.message = sessionsAndBooths[0].Id;
+                    } else {
+                        if(eaList.size()!=0)
+                        {
+                            cr.isSuccess = false;
+                            cr.message = 'Oops! You have already given feedback for this sponsor booth';
+                        }
+                        else {
+                            cr.isSuccess = true;
+                            cr.message = sessionsAndBooths[0].Id;
+                        }
+                    }
+                }
+                else {
                     cr.isSuccess = false;
-                cr.message = 'This code is not valid.';
-                    // cr.isSuccess = true;
-                    // cr.message = sessionsAndBooths[0].Id;
+                    cr.message = 'Oops! This code does not belong to '+sessionName+' sponsor booth.';
                 }
             } else {
                 cr.isSuccess = false;
-                cr.message = 'This code is not valid. 123';
+                    cr.message = 'Oops! This code does not belong to a sponsor booth. Please check the code and try again!';
             }
         } catch (Exception e) {
             cr.isSuccess = false;
@@ -600,7 +620,8 @@ public without sharing class EventAppCtrl {
         String attendeeId,
         String eventId,
         Integer slot,
-        String type
+        String type,
+        String sessionName
     ) {
         CustomResponse cr = new CustomResponse();
         try {
@@ -620,47 +641,69 @@ public without sharing class EventAppCtrl {
             }
             if(slot==validSlot)
             {
-                List<Session_Booth__c> sessionsAndBooths = [
-                SELECT Id, Type__c
-                FROM Session_Booth__c
-                WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId and slot__c =:slot and Type__c=:type
-                LIMIT 1
-            ];
-            system.debug('##event id '+ eventId);
-            if (sessionsAndBooths.size() == 1 && sessionsAndBooths[0].Type__c=='Workshop') {
-                Integer points=500;
-                List<Session_Booth_Attendance__c> sbaList = [
-                    SELECT Id
-                    FROM Session_Booth_Attendance__c
-                    WHERE
-                        Event_Attendee__c = :attendeeId
-                        AND Code__c = :sessionCode
+                    List<Session_Booth__c> sessionsAndBooths = [
+                    SELECT Id, Type__c, Name
+                    FROM Session_Booth__c
+                    WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId and slot__c =:slot and Type__c=:type
+                    LIMIT 1
+                    
                 ];
-                if (sbaList.size() == 0) {
-                    cr.isSuccess = true;
-                    Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
-                    sba.Event_Attendee__c = attendeeId;
-                    sba.Session_Booth__c = sessionsAndBooths[0].Id;
-                    sba.Points__c=points;
-                    sba.slot__c=slot;
-                    sba.Code__c=sessionCode;
-                    sba.Type__c=type;
-                    insert sba;
-                    cr.message = sessionsAndBooths[0].Id;
+                
+                system.debug('##event id '+ eventId);
+                if (sessionsAndBooths.size() == 1 && sessionsAndBooths[0].Type__c=='Workshop') {
+                    if(sessionsAndBooths[0].Name==sessionName)
+                    {
+                        Integer points=500;
+                        List<Session_Booth_Attendance__c> sbaList = [
+                            SELECT Id
+                            FROM Session_Booth_Attendance__c
+                            WHERE
+                                Event_Attendee__c = :attendeeId
+                                AND Code__c = :sessionCode
+                        ];
+                        List<Event_Activity__c> eaList = [
+                            SELECT Id
+                            FROM Event_Activity__c
+                            WHERE
+                                Event_Attendee__c = :attendeeId
+                                AND Session_Code__c = :sessionCode
+                        ];
+                        if (sbaList.size() == 0) {
+                            cr.isSuccess = true;
+                            Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
+                            sba.Event_Attendee__c = attendeeId;
+                            sba.Session_Booth__c = sessionsAndBooths[0].Id;
+                            sba.Points__c=points;
+                            sba.slot__c=slot;
+                            sba.Code__c=sessionCode;
+                            sba.Type__c=type;
+                            insert sba;
+                            cr.message = sessionsAndBooths[0].Id;
+                        } 
+                        else {
+                            if(eaList.size()!=0)
+                            {
+                                cr.isSuccess = false;
+                                cr.message = 'Oops! You have already given feedback for this workshop';
+                            }
+                            else {
+                                cr.isSuccess = true;
+                                cr.message = sessionsAndBooths[0].Id;
+                            }
+                        }
+                    }
+                    else {
+                        cr.isSuccess = false;
+                        cr.message = 'Oops! This session code does not belong to '+sessionName+' workshop.';
+                    }
                 } else {
                     cr.isSuccess = false;
-                cr.message = 'This code is not valid.';
-                    // cr.isSuccess = true;
-                    // cr.message = sessionsAndBooths[0].Id;
+                    cr.message = 'Oops! This session code does not belong to a workshop. Please check the code and try again!';
                 }
-            } else {
-                cr.isSuccess = false;
-                cr.message = 'Please enter a valid workshop code';
-            }
             }
             else {
                 cr.isSuccess = false;
-                cr.message = 'Please enter a valid workshop code 123';
+                cr.message = 'Please enter a valid workshop code';
             }
         } catch (Exception e) {
             cr.isSuccess = false;

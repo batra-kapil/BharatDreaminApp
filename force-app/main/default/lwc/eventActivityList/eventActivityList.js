@@ -1,7 +1,7 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getEventActivities from '@salesforce/apex/EventAppCtrl.getEventActivities';
 const columns = [
-    { label: 'Activity Description', fieldName: 'Activity_Description__c', type: 'text' },
+    { label: 'Activity Description', fieldName: 'Activity_Description__c', type: 'text',wrapText: true },
     { label: 'Points', fieldName: 'Points__c', type: 'number' }
 ];
 export default class EventActivityList extends LightningElement {

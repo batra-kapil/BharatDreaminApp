@@ -52,7 +52,7 @@
 
 .btn {
     display: block;
-    width: 110px;
+    min-width: 110px;
 }
 
 .redeem-btn {

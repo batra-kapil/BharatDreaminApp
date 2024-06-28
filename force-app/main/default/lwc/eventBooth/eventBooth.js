@@ -118,7 +118,7 @@ export default class EventBooth extends LightningElement {
         this.showSpinner = true;
         console.log('##phase'+this.phase);
         this.points=250;
-        this.activityDescription='You gave feedback for sponsor booth  ';
+        this.activityDescription='Visited booth  ';
         console.log('##points'+this.points);
         saveActivity({
             eventId: this.eventId,
@@ -170,7 +170,8 @@ export default class EventBooth extends LightningElement {
         saveBoothAttendance({
             eventId: this.eventId,
             attendeeId: this.attendeeId,
-            sessionCode: sessionCode
+            sessionCode: sessionCode,
+            sessionName: this.selectedSessionTitle
         })
             .then((result) => {
                 if (result) {
@@ -274,4 +275,17 @@ export default class EventBooth extends LightningElement {
     closeScanner() {
         this.showScanner = false;
     }
+    showModal = false;
+    selectedSessionTitle;
+    openModal(event){
+        console.log('##show modal'+event.target.dataset.id);
+        this.selectedSessionTitle=event.target.dataset.id;
+        this.showModal = true;
+        console.log('##show modal 1');
+     }
+     closeModal()
+     {
+        this.showModal=false;
+        this.selectedSessionTitle=false;
+     }
 }
