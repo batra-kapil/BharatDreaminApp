@@ -34,8 +34,9 @@
 .align-center {
     display: flex;
     justify-content: center;
-    padding-top: 0.4rem;
-    padding-bottom: 0.4rem;
+    /* padding-top: 0.4rem;
+    padding-bottom: 0.4rem; */
+    padding: 5px;
 }
 .align-left {
     display: flex;
@@ -56,8 +57,8 @@
 }
 .circle-image-wrapper {
     position: relative;
-    width: 5.5rem;
-    height: 5.5rem;
+    width: 4.5rem;
+    height: 4.5rem;
     border-radius: 50%;
     background-size: cover;
     background-position: center;
@@ -80,6 +81,13 @@
 }
 .title-speaker {
     color: #321977;
+    font-size: .6rem;
+    font-weight: bold;
+    height: 25px;
+    overflow: hidden;
+}
+.title-keynote {
+    color: #321977;
     font-size: .8rem;
     font-weight: bold;
 }
@@ -88,7 +96,7 @@
     font-size: .6rem;
 }
 .image-banner {
-    height: 30rem;
+    /* height: 30rem; */
     width: -webkit-fill-available;
 }
 .custom-card {
@@ -128,6 +136,51 @@
     color: #004d40; /* Teal color for the message */
     font-weight: bold;
     margin-bottom: 0;
+}
+.clickable-item {
+    cursor: pointer;
+}
+
+.slds-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.slds-modal__header h2 {
+    margin: 0;
+}
+.custom-button .slds-button {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 3px 6px; /* Smaller padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline-block element */
+    font-size: 10px; /* Smaller font size */
+    margin: 1px 0px; /* Smaller margin */
+    cursor: pointer; /* Pointer/hand icon */
+    border-radius: 3px; /* Slightly rounded corners */
+    transition-duration: 0.4s; /* Smooth transition */
+}
+
+.custom-button .slds-button:hover {
+    background-color: white; /* White background */
+    color: black; /* Black text */
+    border: 2px solid #4CAF50; /* Green border */
+}
+button{
+    font-size: xx-small;
+}
+iframe {
+    width: 100%;
+    height: 300px;
+    border: 0;
+}
+
+.reader {
+    width: 100%;
 }
 
 

@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="Event Agenda" icon-name="custom:custom14">
+        <div class="agenda-container">
+            <template for:each={groupedAgenda} for:item="group">
+                <div key={group.time} class="agenda-group">
+                    <div class="group-time">{group.time}</div>
+                    <template for:each={group.items} for:item="item">
+                        <div key={item.id} class="agenda-item">
+                            <div class="details">
+                                <div class="title">{item.title}</div>
+                                <template if:true={item.speakers}>
+                                    <div class="speakers"><lightning-icon icon-name="utility:groups" alternative-text="Speakers" size="small"></lightning-icon> {item.speakers}</div>
+                                </template>
+                                <template if:true={item.location}>
+                                    <div class="location"><lightning-icon icon-name="utility:location" alternative-text="Location" size="small"></lightning-icon> {item.location}</div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

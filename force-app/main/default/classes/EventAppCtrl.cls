@@ -11,12 +11,11 @@ public without sharing class EventAppCtrl {
         }
         return null;
     }
-    @AuraEnabled(cacheable=true)
-    public static Decimal getUserPoints(Id attendeeId) {
+    @AuraEnabled
+    public static Decimal getUserPoints(String attendeeId) {
         Event_Attendees__c acc = [SELECT Points__c FROM Event_Attendees__c WHERE Id = :attendeeId LIMIT 1];
         return acc.Points__c;
     }
-
     @AuraEnabled
     public static String getAttendeeByEmail(String email, String eventId, String password) {
         Map<String, Object> result = new Map<String, Object>();
@@ -105,13 +104,13 @@ public without sharing class EventAppCtrl {
         try {
             String name='';
             List<Session_Booth__c> sessionsAndBooths = [
-                SELECT Id, Name
+                SELECT Id, Session_Name__c
                 FROM Session_Booth__c
                 WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId
                 LIMIT 1
             ];
             system.debug('##event id '+ eventId);
-            name = sessionsAndBooths[0].Name;
+            name = sessionsAndBooths[0].Session_Name__c;
             return name;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
@@ -131,19 +130,33 @@ public without sharing class EventAppCtrl {
         String sessionCode
     ) {
         try {
-            List<Session_Booth__c> sessionsAndBooths = [
-                SELECT Id, Name
-                FROM Session_Booth__c
-                WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId
-                LIMIT 1
-            ];
-            system.debug('##event id '+ eventId);
-            String name ='';
-            if(sessionsAndBooths.size()==1)
+            if(activityDescription!='Keynote speakers feedback' && activityDescription!='Overall Event Feedback')
             {
-                name= sessionsAndBooths[0].Name;
+                List<Session_Booth__c> sessionsAndBooths = [
+                    SELECT Id, Session_Name__c, slot__c
+                    FROM Session_Booth__c
+                    WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId
+                    LIMIT 1
+                ];
+                String name ='';
+                if(sessionsAndBooths.size()==1)
+                {
+                    name= sessionsAndBooths[0].Session_Name__c;
+                }
+                Event_Activity__c ea = new Event_Activity__c();
+                ea.Trailblazer_Event__c = eventId;
+                ea.Event_Attendee__c = attendeeId;
+                ea.Type__c = activityType;
+                ea.Sub_Type__c = activitySubType;
+                ea.Value__c = value;
+                ea.Additional_Info__c = additionalInfo;
+                ea.Points__c=points;
+                ea.Activity_Description__c=activityDescription+name;
+                ea.Session_Code__c=sessionCode;
+                ea.slot__c=sessionsAndBooths[0].slot__c;
+                insert ea;
             }
-            System.debug('##points '+points);
+            else {
             Event_Activity__c ea = new Event_Activity__c();
             ea.Trailblazer_Event__c = eventId;
             ea.Event_Attendee__c = attendeeId;
@@ -152,9 +165,9 @@ public without sharing class EventAppCtrl {
             ea.Value__c = value;
             ea.Additional_Info__c = additionalInfo;
             ea.Points__c=points;
-            ea.Activity_Description__c=activityDescription+name;
-            ea.Session_Code__c=sessionCode;
+            ea.Activity_Description__c=activityDescription;
             insert ea;
+            }
 
             List<Event_Attendees__c> attendee=[Select Points__c, Id from Event_Attendees__c WHERE Id=:attendeeId limit 1];
 
@@ -464,6 +477,11 @@ public without sharing class EventAppCtrl {
         return uniqueString;
     }
 
+    @AuraEnabled(cacheable=true)
+    public static Session_Booth__c getSessionRecord(Id recordId) {
+        return [SELECT Session_Name__c, Code__c FROM Session_Booth__c WHERE Id = :recordId LIMIT 1];
+    }
+
     @AuraEnabled
     public static String saveSessionBoothAttendance(
         String sessionCode,
@@ -476,18 +494,36 @@ public without sharing class EventAppCtrl {
         CustomResponse cr = new CustomResponse();
         try {
             List<Session_Booth__c> sessionsAndBooths = [
-                SELECT Id, Type__c, Name
+                SELECT Id, Type__c, Session_Name__c, slot__c
                 FROM Session_Booth__c
                 WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId and slot__c =:slot
                 LIMIT 1
             ];
             system.debug('##event id '+ eventId);
             if (sessionsAndBooths.size() == 1 && sessionsAndBooths[0].Type__c=='Session') {
-                if(sessionsAndBooths[0].Name==sessionName)
+                if(sessionsAndBooths[0].Session_Name__c==sessionName)
                 {
                     Integer points=500;
                     system.debug('##points '+points);
-                    List<Session_Booth_Attendance__c> sbaList = [
+                    //check if entry exists for workshop
+                    List<Event_Activity__c> activityCheck = [
+                        SELECT Id, Activity_Description__c, slot__c
+                        FROM Event_Activity__c
+                        WHERE
+                            Event_Attendee__c = :attendeeId
+                            AND Activity_Description__c like '%Workshop%'
+                    ];
+                    if(activityCheck.size()!=0)
+                    {
+                        if(activityCheck[0].slot__c==1)
+                        {
+                            if(sessionsAndBooths[0].slot__c==1 || sessionsAndBooths[0].slot__c==2 || sessionsAndBooths[0].slot__c==3)
+                            {
+                                cr.isSuccess = false;
+                                cr.message = 'Oops! You have already given feedback for a workshop of this slot';
+                            }
+                            else {
+                                List<Session_Booth_Attendance__c> sbaList = [
                         SELECT Id
                         FROM Session_Booth_Attendance__c
                         WHERE
@@ -499,7 +535,7 @@ public without sharing class EventAppCtrl {
                         FROM Event_Activity__c
                         WHERE
                             Event_Attendee__c = :attendeeId
-                            AND Session_Code__c = :sessionCode
+                            AND slot__c = :slot
                     ];
                     if (sbaList.size() == 0) {
                         cr.isSuccess = true;
@@ -523,6 +559,95 @@ public without sharing class EventAppCtrl {
                             cr.isSuccess = true;
                             cr.message = sessionsAndBooths[0].Id;
                         }
+                    }
+                            }
+                        }
+                        else if(activityCheck[0].slot__c==2)
+                        {
+                            if(sessionsAndBooths[0].slot__c==4 || sessionsAndBooths[0].slot__c==5 || sessionsAndBooths[0].slot__c==6)
+                            {
+                                cr.isSuccess = false;
+                                cr.message = 'Oops! You have already given feedback for a workshop of this slot';
+                            }
+                            else {
+                                List<Session_Booth_Attendance__c> sbaList = [
+                        SELECT Id
+                        FROM Session_Booth_Attendance__c
+                        WHERE
+                            Event_Attendee__c = :attendeeId
+                            AND slot__c = :slot
+                    ];
+                    List<Event_Activity__c> eaList = [
+                        SELECT Id
+                        FROM Event_Activity__c
+                        WHERE
+                            Event_Attendee__c = :attendeeId
+                            AND slot__c = :slot
+                    ];
+                    if (sbaList.size() == 0) {
+                        cr.isSuccess = true;
+                        Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
+                        sba.Event_Attendee__c = attendeeId;
+                        sba.Session_Booth__c = sessionsAndBooths[0].Id;
+                        sba.Points__c=points;
+                        sba.slot__c=slot;
+                        sba.Code__c=sessionCode;
+                        sba.Type__c=type;
+                        insert sba;
+                        cr.message = sessionsAndBooths[0].Id;
+                    } 
+                    else {
+                        if(eaList.size()!=0)
+                        {
+                            cr.isSuccess = false;
+                            cr.message = 'Oops! You have already given feedback for this session';
+                        }
+                        else {
+                            cr.isSuccess = true;
+                            cr.message = sessionsAndBooths[0].Id;
+                        }
+                    }
+                            }
+                        }
+                    }
+                    else {
+                        List<Session_Booth_Attendance__c> sbaList = [
+                        SELECT Id
+                        FROM Session_Booth_Attendance__c
+                        WHERE
+                            Event_Attendee__c = :attendeeId
+                            AND slot__c = :slot
+                    ];
+                    List<Event_Activity__c> eaList = [
+                        SELECT Id
+                        FROM Event_Activity__c
+                        WHERE
+                            Event_Attendee__c = :attendeeId
+                            AND slot__c = :slot
+                    ];
+                    if (sbaList.size() == 0) {
+                        cr.isSuccess = true;
+                        Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
+                        sba.Event_Attendee__c = attendeeId;
+                        sba.Session_Booth__c = sessionsAndBooths[0].Id;
+                        sba.Points__c=points;
+                        sba.slot__c=slot;
+                        sba.Code__c=sessionCode;
+                        sba.Type__c=type;
+                        insert sba;
+                        cr.message = sessionsAndBooths[0].Id;
+                    } 
+                    else {
+                        if(eaList.size()!=0)
+                        {
+                            cr.isSuccess = false;
+                            cr.message = 'Oops! You have already given feedback for this session';
+                        }
+                        else {
+                            cr.isSuccess = true;
+                            cr.message = sessionsAndBooths[0].Id;
+                        }
+                    }
                     }
                 }
                 else {
@@ -551,14 +676,14 @@ public without sharing class EventAppCtrl {
         CustomResponse cr = new CustomResponse();
         try {
             List<Session_Booth__c> sessionsAndBooths = [
-                SELECT Id, Type__c, Name
+                SELECT Id, Type__c, Session_Name__c
                 FROM Session_Booth__c
                 WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId and Type__c='Booth'
                 LIMIT 1
             ];
             system.debug('##event id '+ eventId);
             if (sessionsAndBooths.size() == 1) {
-                if(sessionsAndBooths[0].Name==sessionName)
+                if(sessionsAndBooths[0].Session_Name__c==sessionName)
                     {
                     Integer points=250;
                     system.debug('##points '+points);
@@ -613,6 +738,80 @@ public without sharing class EventAppCtrl {
 
         return JSON.serialize(cr);
     }
+    @AuraEnabled
+    public static String savePanelAttendance(
+        String sessionCode,
+        String attendeeId,
+        String eventId,
+        String sessionName,
+        Integer slot
+    ) {
+        CustomResponse cr = new CustomResponse();
+        try {
+            List<Session_Booth__c> sessionsAndBooths = [
+                SELECT Id, Type__c, Session_Name__c
+                FROM Session_Booth__c
+                WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId and Type__c='Panel'
+                LIMIT 1
+            ];
+            system.debug('##event id '+ eventId);
+            if (sessionsAndBooths.size() == 1) {
+                if(sessionsAndBooths[0].Session_Name__c==sessionName)
+                    {
+                    Integer points=250;
+                    system.debug('##points '+points);
+                    List<Session_Booth_Attendance__c> sbaList = [
+                        SELECT Id
+                        FROM Session_Booth_Attendance__c
+                        WHERE
+                            Event_Attendee__c = :attendeeId
+                            AND slot__c=:slot
+                    ];
+                    List<Event_Activity__c> eaList = [
+                            SELECT Id
+                            FROM Event_Activity__c
+                            WHERE
+                                Event_Attendee__c = :attendeeId
+                                AND slot__c=:slot
+                        ];
+                    if (sbaList.size() == 0) {
+                        cr.isSuccess = true;
+                        Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
+                        sba.Event_Attendee__c = attendeeId;
+                        sba.Session_Booth__c = sessionsAndBooths[0].Id;
+                        sba.Points__c=points;
+                        sba.Code__c = sessionCode;
+                        sba.Type__c='Panel';
+                        sba.slot__c=slot;
+                        insert sba;
+                        cr.message = sessionsAndBooths[0].Id;
+                    } else {
+                        if(eaList.size()!=0)
+                        {
+                            cr.isSuccess = false;
+                            cr.message = 'Oops! You can only give feedback for one panel discussion';
+                        }
+                        else {
+                            cr.isSuccess = true;
+                            cr.message = sessionsAndBooths[0].Id;
+                        }
+                    }
+                }
+                else {
+                    cr.isSuccess = false;
+                    cr.message = 'Oops! This code does not belong to '+sessionName+' a panel discussion.';
+                }
+            } else {
+                cr.isSuccess = false;
+                    cr.message = 'Oops! This code does not belong to a panel discussion. Please check the code and try again!';
+            }
+        } catch (Exception e) {
+            cr.isSuccess = false;
+            cr.message = 'An error occurred. Please contact event staff.';
+        }
+
+        return JSON.serialize(cr);
+    }
 
     @AuraEnabled
     public static String saveWorkshopAttendance(
@@ -631,18 +830,20 @@ public without sharing class EventAppCtrl {
             FROM Trailblazer_Event__c
             WHERE Active__c = TRUE
         ];
-
+            String query='';
             if(events[0].Event_Phase__c=='Booths and Sessions' || events[0].Event_Phase__c=='Booths and Sessions 2' || events[0].Event_Phase__c=='Booths and Sessions 3')
             {
                 validSlot=1;
+                query='slot__c IN (1, 2, 3)';
             }
             else if(events[0].Event_Phase__c=='Booths and Sessions 4' || events[0].Event_Phase__c=='Booths and Sessions 5' || events[0].Event_Phase__c=='Booths and Sessions 6') {
                 validSlot=2;
+                query='slot__c IN (4, 5, 6)';
             }
             if(slot==validSlot)
             {
                     List<Session_Booth__c> sessionsAndBooths = [
-                    SELECT Id, Type__c, Name
+                    SELECT Id, Type__c, Session_Name__c, slot__c
                     FROM Session_Booth__c
                     WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId and slot__c =:slot and Type__c=:type
                     LIMIT 1
@@ -651,23 +852,13 @@ public without sharing class EventAppCtrl {
                 
                 system.debug('##event id '+ eventId);
                 if (sessionsAndBooths.size() == 1 && sessionsAndBooths[0].Type__c=='Workshop') {
-                    if(sessionsAndBooths[0].Name==sessionName)
+                    if(sessionsAndBooths[0].Session_Name__c==sessionName)
                     {
                         Integer points=500;
-                        List<Session_Booth_Attendance__c> sbaList = [
-                            SELECT Id
-                            FROM Session_Booth_Attendance__c
-                            WHERE
-                                Event_Attendee__c = :attendeeId
-                                AND Code__c = :sessionCode
-                        ];
-                        List<Event_Activity__c> eaList = [
-                            SELECT Id
-                            FROM Event_Activity__c
-                            WHERE
-                                Event_Attendee__c = :attendeeId
-                                AND Session_Code__c = :sessionCode
-                        ];
+                        String queryList = 'SELECT Id FROM Session_Booth_Attendance__c WHERE Event_Attendee__c = :attendeeId AND ' + query;
+                        List<Session_Booth_Attendance__c> sbaList = Database.query(queryList);
+                        String queryActivityList = 'SELECT Id FROM Event_Activity__c WHERE Event_Attendee__c = :attendeeId AND ' + query;
+                        List<Event_Activity__c> eaList = Database.query(queryActivityList);
                         if (sbaList.size() == 0) {
                             cr.isSuccess = true;
                             Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
@@ -684,7 +875,7 @@ public without sharing class EventAppCtrl {
                             if(eaList.size()!=0)
                             {
                                 cr.isSuccess = false;
-                                cr.message = 'Oops! You have already given feedback for this workshop';
+                                cr.message = 'Oops! You have already given feedback for a workshop or session of this slot';
                             }
                             else {
                                 cr.isSuccess = true;
@@ -726,7 +917,7 @@ public without sharing class EventAppCtrl {
     public static Session_Booth__c login(String sessCode, String otp) {
         Trailblazer_Event__c ev = getActiveEvent();
         List<Session_Booth__c> sb = [
-            SELECT Id, Name, Password__c, Password_Used__c
+            SELECT Id, Session_Name__c, Password__c, Password_Used__c
             FROM Session_Booth__c
             WHERE Code__c = :sessCode AND Trailblazer_Event__c = :ev.Id
             LIMIT 1
@@ -820,7 +1011,7 @@ public without sharing class EventAppCtrl {
         String eventId
     ) {
         return [
-            SELECT Id, Name
+            SELECT Id, Session_Name__c
             FROM Session_Booth__c
             WHERE Trailblazer_Event__c = :eventId
         ];

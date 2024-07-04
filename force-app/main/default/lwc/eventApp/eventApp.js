@@ -9,11 +9,11 @@ import QRCode from "c/barcode";
 
 const WHATSON = "WO";
 const QUESTS = "QS";
-const ATTENDEEID_LOCALSTORAGE = "attendeeId_<event_name>";
+const ATTENDEEID_LOCALSTORAGE = "attendeeId_bharatdreamin";
 
 export default class EventApp extends LightningElement {
-    @track userPoints;
-    @track error;
+    userPoints=0;
+    error;
 
    
     phase;
@@ -33,27 +33,15 @@ export default class EventApp extends LightningElement {
     preRegistered = false;
     redeem;
     accountName;
-    //error;
-
-    @wire(getUserPoints, { attendeeId: '$attendeeId' })
-    wiredAccountName({ error, data }) {
-        if (data) {
-            this.userPoints = data;
-            this.error = undefined;
-        } else if (error) {
-            this.error = error;
-            this.userPoints = undefined;
-        }
-        console.log('##user Points '+this.userPoints);
-    }
     
     async connectedCallback() {
         console.log('##sf logo '+this.sfLogo);
         console.log('##try 1');
         try {
+            
             const eventResult = await getActiveEvent();
             if (eventResult) {
-                console.log('##event result'+eventResult.Id);
+                console.log('##event result123'+eventResult.Id);
                 this.activeEventId = eventResult.Id;
                 this.phase = eventResult.Event_Phase__c;
                 const localStorageAttendeeId = localStorage.getItem(
@@ -61,8 +49,11 @@ export default class EventApp extends LightningElement {
                 );
                 if (localStorageAttendeeId) {
                     this.attendeeId = localStorageAttendeeId;
-                    this.dashboard = localStorageAttendeeId;
+                    console.log('##aid'+this.attendeeId);
+                    this.handleReloadData();
+                    
                     this.getAttendeeInfo();
+                    this.dashboard = localStorageAttendeeId;
                 }
             }
             this.isLoading = false;
@@ -78,7 +69,20 @@ export default class EventApp extends LightningElement {
             );
         }
     }
-
+    handleReloadData() {
+        getUserPoints({ attendeeId: this.attendeeId })
+            .then((result) => {
+                if (result!=undefined) {
+                    this.userPoints = result;
+                    console.log('##reloaded '+result);
+                } else {
+                    this.userPoints = undefined;
+                }
+            })
+            .catch(() => {
+            this.userPoints = undefined;
+            });
+    }
     handleRegComplete(event) {
         this.attendeeId = event.detail.attendeeId;
         this.dashboard = event.detail.attendeeId;

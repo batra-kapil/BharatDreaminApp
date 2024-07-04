@@ -10,6 +10,7 @@ export default class SwagHomeTab extends LightningElement {
    dashboard;
    redeem;
    showWhatsOn;
+   showAgenda;
    pointsBoard;
    leaderBoard;
    showBooth;
@@ -40,6 +41,12 @@ export default class SwagHomeTab extends LightningElement {
     this.redeem=false;
     this.showWhatsOn=true;
   }
+  handleShowAgenda() {
+    this.dashboard=false;
+    //console.log('##dashabord '+this.dashboard);
+    this.redeem=false;
+    this.showAgenda=true;
+  }
   handlepointsBoard() {
     console.log('##attendee'+this.attendeeId);
     this.dashboard=false;
@@ -65,4 +72,5 @@ export default class SwagHomeTab extends LightningElement {
     this.showSpeakers=false;
     this.showSponsors=true;
   }
+  
 }

@@ -4,19 +4,15 @@
         <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
     </template>
     <template lwc:else>
-        <div class="header">
-            <div class="header-content">
-                <span class="user-name">{userName}</span>
-                <span class="user-points">{userPoints} points</span>
-            </div>
-        </div>
         <template for:each={swagList} for:item="item" for:index="index">
             <div key={item} class={item.class}>
-                <lightning-layout class="slds-align_absolute-center">
-                    <lightning-layout-item class="slds-m-right_large">
+                <lightning-layout class="slds-align_absolute-center" style="padding: 0px 15px 0px 15px;">
+                    <lightning-layout-item class="slds-m-right_large" size="4"
+                    medium-device-size="4" large-device-size="4" small-device-size="4">
                         <img class="swag-image" src={item.imageUrl}/>
                     </lightning-layout-item>
-                    <lightning-layout-item>
+                    <lightning-layout-item size="8"
+                    medium-device-size="8" large-device-size="8" small-device-size="8">
                         <lightning-layout multiple-rows="true">
                             <lightning-layout-item size="12">
                                 <div class="swag-name slds-m-bottom_medium">{item.name}</div>

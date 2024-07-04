@@ -22,6 +22,10 @@ export default class SwagsList extends LightningElement {
                 this.userDetails.swagsList.forEach((swag, index) => {
                     swag.class = `container ${index !== 0 ? 'container-with-radius' : ''} slds-m-bottom_medium slds-p-vertical_large`;
                 });
+                const reloadEvent = new CustomEvent('reloaddata', {
+                    bubbles: true,
+                    composed: true
+                });
             })
            .catch(error => {
                 LightningAlert.open({
@@ -31,7 +35,6 @@ export default class SwagsList extends LightningElement {
                 });
             });
     }
-
     handleClaimSwagBtn(event) {
         let index = event.currentTarget.dataset.index;
         claimSwag({ productName: this.userDetails.swagsList[index].name, accountId: this.recordId }).then(() => {
@@ -41,6 +44,11 @@ export default class SwagsList extends LightningElement {
                 label: 'Swag Claimed',
             });
             this.getData();
+            const reloadEvent = new CustomEvent('reloaddata', {
+                bubbles: true,
+                composed: true
+            });
+            this.dispatchEvent(reloadEvent);
         }).catch((error) => {
             LightningAlert.open({
                 message: error.body.message+'Some error occurred while claiming the swag 1',
@@ -50,7 +58,6 @@ export default class SwagsList extends LightningElement {
             this.getData();
         });
     }
-
     get showLoading() {
         return this.userDetails === null;
     }

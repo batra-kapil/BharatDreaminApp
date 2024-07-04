@@ -87,12 +87,15 @@
 }
 
 .user-name {
-    font-size: 1.2em;
+    font-size: 0.9rem;
     font-weight: bold;
+    max-width: 70%;
+    overflow: hidden;
+    max-height: 20px;
 }
 
 .user-points {
-    font-size: 1.2em;
+    font-size: 0.9rem;
     font-weight: bold;
 }
 .slds-button_icon {

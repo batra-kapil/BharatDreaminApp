@@ -22,5 +22,6 @@ export default class ScanQRCode extends LightningElement {
 
     handleLoad() {
         this.iframeLoaded = true;
+        console.log('##handle load');
     }
 }

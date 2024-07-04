@@ -7,50 +7,58 @@
                 <lightning-layout-item size="12" class="main-section">
                     <lightning-layout multiple-rows class="slds-wrap">
                         <lightning-layout-item class="grid-item" size="6" medium-device-size="6" small-device-size="6">
-                            <div class="card">
+                            <div class="card" onclick={handleshowWhatsOn}>
                                 <lightning-icon icon-name="standard:data_cloud" size="small" alternative-text="What's Buzzing" class="card-icon"></lightning-icon>
                                 <br/>
-                                <lightning-button variant="base" label="What's Buzzing" title="What's Buzzing" onclick={handleshowWhatsOn} class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
+                                <lightning-button variant="base" label="What's Buzzing" title="What's Buzzing" class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
                                 </lightning-button>
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item class="grid-item" size="6" medium-device-size="6" small-device-size="6">
-                            <div class="card">
+                            <div class="card" onclick={handleShowAgenda}>
+                                <lightning-icon icon-name="standard:budget_period" size="small" alternative-text="Agenda" class="card-icon"></lightning-icon>
+                                <br/>
+                                <lightning-button variant="base" label="Agenda" title="Agenda" class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
+                                </lightning-button>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="grid-item" size="6" medium-device-size="6" small-device-size="6">
+                            <div class="card" onclick={handleBooth}>
                                 <lightning-icon icon-name="standard:webcart" size="small" alternative-text="Visit Booth" class="card-icon"></lightning-icon>
                                 <br/>
-                                <lightning-button variant="base" label="Visit Booth" title="Visit Booth" onclick={handleBooth} class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
+                                <lightning-button variant="base" label="Visit Booth" title="Visit Booth" class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
                                 </lightning-button>
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item class="grid-item" size="6" medium-device-size="6" small-device-size="6">
-                            <div class="card">
+                            <div class="card" onclick={handleRedeem}>
                                 <lightning-icon icon-name="standard:webcart" size="small" alternative-text="Redeem" class="card-icon"></lightning-icon>
                                 <br/>
-                                <lightning-button variant="base" label="Redeem" title="Redeem" onclick={handleRedeem} class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
+                                <lightning-button variant="base" label="Redeem" title="Redeem" class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
                                 </lightning-button>
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item class="grid-item" size="6" medium-device-size="6" small-device-size="6">
-                            <div class="card">
+                            <div class="card" onclick={handlepointsBoard}>
                             <lightning-icon icon-name="standard:visit_templates" size="small" alternative-text="Points Board" class="card-icon"></lightning-icon>
                                 <br/>
-                                <lightning-button variant="base" label="Points Board" title="Points Board" onclick={handlepointsBoard} class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
+                                <lightning-button variant="base" label="Points Board" title="Points Board" class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
                                 </lightning-button>
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item class="grid-item" size="6" medium-device-size="6" small-device-size="6">
-                            <div class="card">
+                            <div class="card" onclick={handleSpeakers}>
                             <lightning-icon icon-name="standard:user" size="small" alternative-text="Speakers" class="card-icon"></lightning-icon>
                                 <br/>
-                                <lightning-button variant="base" label="Speakers" title="Speakers" onclick={handleSpeakers} class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
+                                <lightning-button variant="base" label="Speakers" title="Speakers" class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
                                 </lightning-button>
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item class="grid-item" size="6" medium-device-size="6" small-device-size="6">
-                            <div class="card">
+                            <div class="card" onclick={handleSponsors}>
                             <lightning-icon icon-name="custom:custom11" size="small" alternative-text="Sponsors" class="card-icon"></lightning-icon>
                                 <br/>
-                                <lightning-button variant="base" label="Sponsors" title="Sponsors" onclick={handleSponsors} class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
+                                <lightning-button variant="base" label="Sponsors" title="Sponsors" class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
                                 </lightning-button>
                             </div>
                         </lightning-layout-item>
@@ -72,6 +80,15 @@
                 attendee-reg-id={attendeeRegId}
                 pre-registered={preRegistered}
             ></c-event-whats-on>
+        </template>
+        <template if:true={showAgenda}>
+            <c-event-agenda
+                event-id={eventId}
+                attendee-id={attendeeId}
+                team-name={teamName}
+                attendee-reg-id={attendeeRegId}
+                pre-registered={preRegistered}
+            ></c-event-agenda>
         </template>
         <template if:true={pointsBoard}>
             <c-event-activity-list

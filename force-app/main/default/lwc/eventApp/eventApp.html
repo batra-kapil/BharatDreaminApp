@@ -17,10 +17,10 @@
                     <div
                         class="slds-col slds-size_1-of-2 slds-text-align_right">
                     <lightning-button-icon
-        icon-name="standard:agent_home" variant="brand"
+        icon-name="standard:apps" variant="brand"
         alternative-text="Refresh"
         onclick={refreshPage}
-        size="large">
+        size="x-large">
     </lightning-button-icon>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
             <div class="header">
                 <div class="header-content">
                     <span class="user-name">Hi {attendeeName}</span>
-                    <span class="user-points">{userPoints} points</span>
+                    <span class="user-points">💴 {userPoints}</span>
                 </div>
             </div>
         </template>
@@ -39,7 +39,7 @@
                         attendee-id={attendeeId}
                         team-name={attendeeTeamName}
                         attendee-reg-id={attendeeRegId}
-                        pre-registered={preRegistered}
+                        pre-registered={preRegistered}  onreloaddata={handleReloadData}
                     ></c-dashboard>
         </template>
         

@@ -1,0 +1,87 @@
+.agenda-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.agenda-group {
+    margin-bottom: 20px;
+}
+
+.group-time {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #16236e;
+    border-radius: 5px;
+}
+
+.agenda-item {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.agenda-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f1f1f1;
+}
+
+.details {
+    font-size: 14px;
+    color: #333;
+}
+
+.title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: black;
+}
+
+.speakers, .location {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    color: #666;
+}
+
+.speakers lightning-icon,
+.location lightning-icon {
+    margin-right: 5px;
+    fill: #666;
+}
+
+.speakers lightning-icon::part(icon),
+.location lightning-icon::part(icon) {
+    fill: #666;
+}
+
+@media only screen and (max-width: 600px) {
+    .agenda-container {
+        padding: 10px;
+    }
+
+    .agenda-item {
+        padding: 10px;
+    }
+
+    .group-time {
+        font-size: 16px;
+    }
+
+    .details {
+        font-size: 12px;
+    }
+}
