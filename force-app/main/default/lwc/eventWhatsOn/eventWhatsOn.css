@@ -58,7 +58,15 @@
 .circle-image-wrapper {
     position: relative;
     width: 4.5rem;
-    height: 4.5rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+}
+.keynote-image-wrapper {
+    position: relative;
+    width: 4rem;
+    height: 5.5rem;
     border-radius: 50%;
     background-size: cover;
     background-position: center;
@@ -182,5 +190,8 @@ iframe {
 .reader {
     width: 100%;
 }
+button.slds-button.slds-button_brand.custom-width {
+    width: 200px !important; /* Higher specificity */
+  }
 
 

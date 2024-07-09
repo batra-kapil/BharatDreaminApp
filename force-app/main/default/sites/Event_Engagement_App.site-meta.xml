@@ -25,9 +25,9 @@
     <referrerPolicyOriginWhenCrossOrigin
     >true</referrerPolicyOriginWhenCrossOrigin>
     <selfRegPage>CommunitiesSelfReg</selfRegPage>
-    <siteAdmin>test-uvegezlhd84h@example.com</siteAdmin>
+    <siteAdmin>kapil@salesforcemvps.com</siteAdmin>
     <siteGuestRecordDefaultOwner
-    >test-uvegezlhd84h@example.com</siteGuestRecordDefaultOwner>
+    >kapil@salesforcemvps.com</siteGuestRecordDefaultOwner>
     <siteType>ChatterNetwork</siteType>
     <urlPathPrefix>vforcesite</urlPathPrefix>
 </CustomSite>

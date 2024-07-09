@@ -25,6 +25,11 @@
                 <label>Keynote 1 Feedback</label>
             </value>
             <value>
+                <fullName>Panel Discussion</fullName>
+                <default>false</default>
+                <label>Panel Discussion</label>
+            </value>
+            <value>
                 <fullName>Booths and Sessions</fullName>
                 <default>false</default>
                 <label>Booths and Sessions</label>
@@ -78,6 +83,11 @@
                 <fullName>Event Feedback</fullName>
                 <default>false</default>
                 <label>Event Feedback</label>
+            </value>
+            <value>
+                <fullName>After Party</fullName>
+                <default>false</default>
+                <label>After Party</label>
             </value>
         </valueSetDefinition>
     </valueSet>

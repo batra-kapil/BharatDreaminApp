@@ -42,7 +42,7 @@ public without sharing class EventAppCtrl {
         return [
             SELECT Id, Activity_Description__c, Points__c
             FROM Event_Activity__c
-            WHERE Event_Attendee__c = :attendeeId
+            WHERE Event_Attendee__c = :attendeeId order by createdDate
         ];
     }
     @AuraEnabled(cacheable=true)
@@ -524,42 +524,42 @@ public without sharing class EventAppCtrl {
                             }
                             else {
                                 List<Session_Booth_Attendance__c> sbaList = [
-                        SELECT Id
-                        FROM Session_Booth_Attendance__c
-                        WHERE
-                            Event_Attendee__c = :attendeeId
-                            AND slot__c = :slot
-                    ];
-                    List<Event_Activity__c> eaList = [
-                        SELECT Id
-                        FROM Event_Activity__c
-                        WHERE
-                            Event_Attendee__c = :attendeeId
-                            AND slot__c = :slot
-                    ];
-                    if (sbaList.size() == 0) {
-                        cr.isSuccess = true;
-                        Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
-                        sba.Event_Attendee__c = attendeeId;
-                        sba.Session_Booth__c = sessionsAndBooths[0].Id;
-                        sba.Points__c=points;
-                        sba.slot__c=slot;
-                        sba.Code__c=sessionCode;
-                        sba.Type__c=type;
-                        insert sba;
-                        cr.message = sessionsAndBooths[0].Id;
-                    } 
-                    else {
-                        if(eaList.size()!=0)
-                        {
-                            cr.isSuccess = false;
-                            cr.message = 'Oops! You have already given feedback for this session';
-                        }
-                        else {
-                            cr.isSuccess = true;
-                            cr.message = sessionsAndBooths[0].Id;
-                        }
-                    }
+                            SELECT Id
+                            FROM Session_Booth_Attendance__c
+                            WHERE
+                                Event_Attendee__c = :attendeeId
+                                AND slot__c = :slot
+                        ];
+                            List<Event_Activity__c> eaList = [
+                                SELECT Id
+                                FROM Event_Activity__c
+                                WHERE
+                                    Event_Attendee__c = :attendeeId
+                                    AND slot__c = :slot
+                            ];
+                            if (sbaList.size() == 0) {
+                                cr.isSuccess = true;
+                                Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
+                                sba.Event_Attendee__c = attendeeId;
+                                sba.Session_Booth__c = sessionsAndBooths[0].Id;
+                                sba.Points__c=points;
+                                sba.slot__c=slot;
+                                sba.Code__c=sessionCode;
+                                sba.Type__c=type;
+                                insert sba;
+                                cr.message = sessionsAndBooths[0].Id;
+                            } 
+                            else {
+                                if(eaList.size()!=0)
+                                {
+                                    cr.isSuccess = false;
+                                    cr.message = 'Oops! You have already given feedback for one of the sessions from this slot';
+                                }
+                                else {
+                                    cr.isSuccess = true;
+                                    cr.message = sessionsAndBooths[0].Id;
+                                }
+                            }
                             }
                         }
                         else if(activityCheck[0].slot__c==2)
@@ -571,83 +571,83 @@ public without sharing class EventAppCtrl {
                             }
                             else {
                                 List<Session_Booth_Attendance__c> sbaList = [
-                        SELECT Id
-                        FROM Session_Booth_Attendance__c
-                        WHERE
-                            Event_Attendee__c = :attendeeId
-                            AND slot__c = :slot
-                    ];
-                    List<Event_Activity__c> eaList = [
-                        SELECT Id
-                        FROM Event_Activity__c
-                        WHERE
-                            Event_Attendee__c = :attendeeId
-                            AND slot__c = :slot
-                    ];
-                    if (sbaList.size() == 0) {
-                        cr.isSuccess = true;
-                        Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
-                        sba.Event_Attendee__c = attendeeId;
-                        sba.Session_Booth__c = sessionsAndBooths[0].Id;
-                        sba.Points__c=points;
-                        sba.slot__c=slot;
-                        sba.Code__c=sessionCode;
-                        sba.Type__c=type;
-                        insert sba;
-                        cr.message = sessionsAndBooths[0].Id;
-                    } 
-                    else {
-                        if(eaList.size()!=0)
-                        {
-                            cr.isSuccess = false;
-                            cr.message = 'Oops! You have already given feedback for this session';
-                        }
-                        else {
+                            SELECT Id
+                            FROM Session_Booth_Attendance__c
+                            WHERE
+                                Event_Attendee__c = :attendeeId
+                                AND slot__c = :slot
+                        ];
+                        List<Event_Activity__c> eaList = [
+                            SELECT Id
+                            FROM Event_Activity__c
+                            WHERE
+                                Event_Attendee__c = :attendeeId
+                                AND slot__c = :slot
+                        ];
+                        if (sbaList.size() == 0) {
                             cr.isSuccess = true;
+                            Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
+                            sba.Event_Attendee__c = attendeeId;
+                            sba.Session_Booth__c = sessionsAndBooths[0].Id;
+                            sba.Points__c=points;
+                            sba.slot__c=slot;
+                            sba.Code__c=sessionCode;
+                            sba.Type__c=type;
+                            insert sba;
                             cr.message = sessionsAndBooths[0].Id;
+                        } 
+                        else {
+                            if(eaList.size()!=0)
+                            {
+                                cr.isSuccess = false;
+                                cr.message = 'Oops! You have already given feedback for one of the sessions from this slot';
+                            }
+                            else {
+                                cr.isSuccess = true;
+                                cr.message = sessionsAndBooths[0].Id;
+                            }
                         }
-                    }
                             }
                         }
                     }
                     else {
-                        List<Session_Booth_Attendance__c> sbaList = [
-                        SELECT Id
-                        FROM Session_Booth_Attendance__c
-                        WHERE
-                            Event_Attendee__c = :attendeeId
-                            AND slot__c = :slot
-                    ];
-                    List<Event_Activity__c> eaList = [
-                        SELECT Id
-                        FROM Event_Activity__c
-                        WHERE
-                            Event_Attendee__c = :attendeeId
-                            AND slot__c = :slot
-                    ];
-                    if (sbaList.size() == 0) {
-                        cr.isSuccess = true;
-                        Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
-                        sba.Event_Attendee__c = attendeeId;
-                        sba.Session_Booth__c = sessionsAndBooths[0].Id;
-                        sba.Points__c=points;
-                        sba.slot__c=slot;
-                        sba.Code__c=sessionCode;
-                        sba.Type__c=type;
-                        insert sba;
-                        cr.message = sessionsAndBooths[0].Id;
-                    } 
-                    else {
-                        if(eaList.size()!=0)
-                        {
-                            cr.isSuccess = false;
-                            cr.message = 'Oops! You have already given feedback for this session';
-                        }
-                        else {
+                            List<Session_Booth_Attendance__c> sbaList = [
+                            SELECT Id
+                            FROM Session_Booth_Attendance__c
+                            WHERE
+                                Event_Attendee__c = :attendeeId
+                                AND slot__c = :slot
+                        ];
+                        List<Event_Activity__c> eaList = [
+                            SELECT Id
+                            FROM Event_Activity__c
+                            WHERE
+                                Event_Attendee__c = :attendeeId
+                                AND slot__c = :slot
+                        ];
+                        if (sbaList.size() == 0) {
                             cr.isSuccess = true;
+                            Session_Booth_Attendance__c sba = new Session_Booth_Attendance__c();
+                            sba.Event_Attendee__c = attendeeId;
+                            sba.Session_Booth__c = sessionsAndBooths[0].Id;
+                            sba.Points__c=points;
+                            sba.slot__c=slot;
+                            sba.Code__c=sessionCode;
+                            sba.Type__c=type;
+                            insert sba;
                             cr.message = sessionsAndBooths[0].Id;
+                        } 
+                        else {
+                            if(eaList.size()!=0)
+                            {
+                                cr.isSuccess = false;
+                                cr.message = 'Oops! You have already given feedback for one of the sessions from this slot';
+                            }
+                            else {
+                                cr.isSuccess = true;
+                                cr.message = sessionsAndBooths[0].Id;
+                            }
                         }
-                    }
                     }
                 }
                 else {
@@ -754,12 +754,12 @@ public without sharing class EventAppCtrl {
                 WHERE Code__c = :sessionCode AND Trailblazer_Event__c = :eventId and Type__c='Panel'
                 LIMIT 1
             ];
-            system.debug('##event id '+ eventId);
+            system.debug('##event id 123'+ eventId);
             if (sessionsAndBooths.size() == 1) {
                 if(sessionsAndBooths[0].Session_Name__c==sessionName)
                     {
                     Integer points=250;
-                    system.debug('##points '+points);
+                    system.debug('##points 123'+points);
                     List<Session_Booth_Attendance__c> sbaList = [
                         SELECT Id
                         FROM Session_Booth_Attendance__c
@@ -854,7 +854,7 @@ public without sharing class EventAppCtrl {
                 if (sessionsAndBooths.size() == 1 && sessionsAndBooths[0].Type__c=='Workshop') {
                     if(sessionsAndBooths[0].Session_Name__c==sessionName)
                     {
-                        Integer points=500;
+                        Integer points=1500;
                         String queryList = 'SELECT Id FROM Session_Booth_Attendance__c WHERE Event_Attendee__c = :attendeeId AND ' + query;
                         List<Session_Booth_Attendance__c> sbaList = Database.query(queryList);
                         String queryActivityList = 'SELECT Id FROM Event_Activity__c WHERE Event_Attendee__c = :attendeeId AND ' + query;

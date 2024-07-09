@@ -51,7 +51,7 @@ export default class SwagsList extends LightningElement {
             this.dispatchEvent(reloadEvent);
         }).catch((error) => {
             LightningAlert.open({
-                message: error.body.message+'Some error occurred while claiming the swag 1',
+                message: error.body.message+' Some error occurred while claiming the swag. Please refresh the page and try again!',
                 theme: 'error',
                 label: 'Error',
             });

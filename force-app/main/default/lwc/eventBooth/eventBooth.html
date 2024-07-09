@@ -31,7 +31,7 @@
                                                                 icon-name="utility:heart"  variant="outline-brand"
                                                                 alternative-text="Feedback"
                                                                 label="Feedback"
-                                                                onclick={openModal} stretch
+                                                                onclick={openModal} stretch style="max-width: 120px;"
                                                             ></lightning-button>
                                                 </div>
 
@@ -74,6 +74,21 @@
                         <lightning-layout-item size="12"
                         medium-device-size="12" large-device-size="12" small-device-size="12" padding="around-small" key={speaker.id}>
                                         <template if:true={showSessionAttendance}>
+                                            <lightning-input
+                                                    onchange={handleSessionCodeChange}
+                                                    variant="label-hidden"
+                                                    placeholder="Enter booth code"
+                                                    class="slds-m-top_small slds-m-bottom_small sessionCode"
+                                                    required="true"
+                                                ></lightning-input>
+                                                <lightning-button
+                                                    variant="brand"
+                                                    label="Submit"
+                                                    onclick={saveSessionAttendance}
+                                                ></lightning-button>
+                                            <div class="slds-m-top_large slds-text-align_left" style="margin: 0px; padding:8px 8px 8px 0px">
+                                                Enter Booth code and submit OR Scan Booth QR
+                                            </div>
                                             <div class="slds-m-top_small">
                                                 <lightning-button
                                                     variant="brand"
@@ -82,8 +97,7 @@
                                                 ></lightning-button>
                                                 <template if:true={showScanner}>
                                                 <div class="slds-p-around_small">
-                                                    Ensure you see a square scanner box. The blox glows green when a scan is
-                                                    successful.
+                                                    Ensure you see a square scanner box.
                                                 </div>
                                                 <template if:false={iframeLoaded}>
                                                     <div class="slds-m-top_large slds-text-align_center">
@@ -96,18 +110,7 @@
                                                     onload={handleLoad}
                                                 ></iframe>
                                             </template>
-                                                <lightning-input
-                                                    onchange={handleSessionCodeChange}
-                                                    variant="label-hidden"
-                                                    placeholder="Enter booth code"
-                                                    class="slds-m-top_small slds-m-bottom_small sessionCode"
-                                                    required="true"
-                                                ></lightning-input>
-                                                <lightning-button
-                                                    variant="brand"
-                                                    label="Submit"
-                                                    onclick={saveSessionAttendance}
-                                                ></lightning-button>
+                                                
                                             </div>
                                         </template>
                                         <template if:true={showSessionFeedback}>

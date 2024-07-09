@@ -25,6 +25,11 @@
                 <default>false</default>
                 <label>Workshop</label>
             </value>
+            <value>
+                <fullName>Panel</fullName>
+                <default>false</default>
+                <label>Panel</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
