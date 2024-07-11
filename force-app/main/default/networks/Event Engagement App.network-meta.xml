@@ -7,7 +7,7 @@
     <communityRoles />
     <disableReputationRecordConversations
     >true</disableReputationRecordConversations>
-    <emailSenderAddress>atopalli@salesforce.com</emailSenderAddress>
+    <emailSenderAddress>imramchandani@gmail.com</emailSenderAddress>
     <emailSenderName>Event Engagement App</emailSenderName>
     <enableCustomVFErrorPageOverrides>false</enableCustomVFErrorPageOverrides>
     <enableDirectMessages>true</enableDirectMessages>

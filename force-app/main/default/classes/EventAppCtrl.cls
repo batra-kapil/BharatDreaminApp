@@ -118,6 +118,30 @@ public without sharing class EventAppCtrl {
     }
 
     @AuraEnabled
+    public static void submitQuiz(Integer totalPoints, String attendeeId) {
+        // Check if an entry already exists for the attendee
+        List<Event_Activity__c> existingEntries = [SELECT Id FROM Event_Activity__c WHERE Event_Attendee__c = :attendeeId AND Activity_Description__c = 'Quiz'];
+        system.debug('##submit quiz');
+        // If no existing entry, create a new one
+        if (existingEntries.isEmpty()) {
+            Event_Activity__c newActivity = new Event_Activity__c(
+                Points__c = totalPoints,
+                Event_Attendee__c = attendeeId,
+                Activity_Description__c = 'Quiz'
+            );
+            insert newActivity;
+        } else {
+            // Handle case if entry already exists, e.g., throw an error
+            throw new AuraHandledException('You have already submitted the quiz.');
+        }
+    }
+    @AuraEnabled
+    public static Boolean hasSubmittedQuiz(String attendeeId) {
+        List<Event_Activity__c> existingEntries = [SELECT Id FROM Event_Activity__c WHERE Event_Attendee__c = :attendeeId AND Activity_Description__c = 'Quiz'];
+        return !existingEntries.isEmpty();
+    }
+
+    @AuraEnabled
     public static Boolean saveActivity(
         String eventId,
         String attendeeId,

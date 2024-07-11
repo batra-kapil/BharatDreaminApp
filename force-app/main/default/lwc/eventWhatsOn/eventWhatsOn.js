@@ -181,7 +181,7 @@ export default class EventWhatsOn extends LightningElement {
                 {
                     id: 2,
                     name: "Thiriyambaga Sarma",
-                    src:"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+                    src:"https://bharatdreamin.com/wp-content/uploads/2024/07/Thiriyambaga-bharat-dreamin-speaker.png",
                     sessionTitle: "Handle Apex exceptions like a pro with custom exception handling framework",
                     sessionLocation: "Convention Hall",
                     src1Visible:false

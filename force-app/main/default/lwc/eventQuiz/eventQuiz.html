@@ -1,0 +1,32 @@
+<template>
+    <div class="custom-card">
+        <template if:true={hasSubmitted}>
+            <div class="slds-text-align_center slds-p-top_medium">
+                <lightning-icon
+                    icon-name="action:approval"
+                    alternative-text="Approved"
+                    title="Approved"
+                ></lightning-icon>
+                <div class="slds-m-top_medium slds-m-bottom_medium">
+                    You have successfully submitted your response. Check your points in points board.
+                </div>
+            </div>
+        </template>
+        <template if:false={hasSubmitted}>
+            <template for:each={questions} for:item="question">
+                <div key={question.id} class="question-container">
+                    <p class="question">{question.text}</p>
+                    <template for:each={question.options} for:item="option">
+                        <div key={option.id} class="option-container">
+                            <input type="radio" id={option.id} name={question.id}
+                                   value={option.id} onchange={handleOptionSelect} required>
+                            <label for={option.id}>{option.text}</label>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <lightning-button label="Submit" onclick={handleSubmit} variant="brand" class="submit-button"></lightning-button>
+            <!-- <p class="score">Total Score: {totalScore}</p> -->
+        </template>
+</div>
+</template>

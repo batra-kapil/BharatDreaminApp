@@ -16,6 +16,7 @@ export default class SwagHomeTab extends LightningElement {
    showBooth;
    showSpeakers;
    showSponsors;
+   showQuiz;
    async connectedCallback() {
     console.log('##dashboard refreshed'+this.dashboardLoad);
     this.dashboard=true;
@@ -71,6 +72,15 @@ export default class SwagHomeTab extends LightningElement {
     this.pointsBoard=false;
     this.showSpeakers=false;
     this.showSponsors=true;
+  }
+  handleQuiz() {
+    this.dashboard=false;
+    this.redeem=false;
+    this.showWhatsOn=false;
+    this.pointsBoard=false;
+    this.showSpeakers=false;
+    this.showSponsors=false;
+    this.showQuiz=true;
   }
   
 }

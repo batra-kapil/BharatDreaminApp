@@ -62,6 +62,14 @@
                                 </lightning-button>
                             </div>
                         </lightning-layout-item>
+                        <lightning-layout-item class="grid-item" size="6" medium-device-size="6" small-device-size="6">
+                            <div class="card" onclick={handleQuiz}>
+                            <lightning-icon icon-name="custom:custom11" size="small" alternative-text="Event Quiz" class="card-icon"></lightning-icon>
+                                <br/>
+                                <lightning-button variant="base" label="Event Quiz" title="Event Quiz" class="slds-m-left_x-small" style="font-size: .8rem; color:black !important">
+                                </lightning-button>
+                            </div>
+                        </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
             </lightning-layout>
@@ -117,6 +125,15 @@
                 attendee-reg-id={attendeeRegId}
                 pre-registered={preRegistered}
             ></c-event-sponsors>
+        </template>
+        <template if:true={showQuiz}>
+            <c-event-quiz
+                event-id={eventId}
+                attendee-id={attendeeId}
+                team-name={teamName}
+                attendee-reg-id={attendeeRegId}
+                pre-registered={preRegistered}
+            ></c-event-quiz>
         </template>
         <template if:true={showBooth}>
             <c-event-booth
